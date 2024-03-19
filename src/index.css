@@ -1,6 +1,13 @@
 @tailwind base;
 @tailwind components;
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.5;
+}
+
 @font-face {
     font-family: Heebo;
     src: url('fonts/Heebo-VariableFont_wght.ttf');
