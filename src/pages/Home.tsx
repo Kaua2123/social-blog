@@ -1,6 +1,6 @@
-import Navbar from './components/Navbar';
+import Navbar from '../components/Navbar';
 
-import social from './imgs/svg/img-social-home-blue.svg';
+import social from '../imgs/svg/img-social-home-blue.svg';
 
 import { Forward, MessageCircle, Pencil } from 'lucide-react';
 
@@ -26,13 +26,13 @@ function Home() {
               <div className="flex flex-row gap-8  w-full">
                 <button
                   className="shadow-lg shadow-blue-400 bg-gradient-to-r from-blue-400 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400
-              transition-all rounded-lg w-32 p-2"
+              transition-all rounded-md w-32 p-2"
                 >
                   Começar
                 </button>
                 <button
                   className="shadow-lg shadow-blue-400 bg-gradient-to-r from-blue-400 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400
-                transition-all rounded-lg w-32 p-2"
+                transition-all rounded-md w-32 p-2"
                 >
                   Saiba mais
                 </button>
