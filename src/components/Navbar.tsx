@@ -2,7 +2,7 @@ import logo from '../imgs/logo.png';
 
 export default function Navbar() {
   return (
-    <div className="sticky flex row justify-between items-center p-4 shadow-lg">
+    <div className="sticky flex row justify-between items-center p-1 shadow-sm">
       <div>
         <img className="size-16 cursor-pointer" src={logo} alt="" />
       </div>

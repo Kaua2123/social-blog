@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         roboto: ['Roboto'],
         heebo: ['Heebo'],
+        poppins: ['Poppins'],
       },
     },
   },
