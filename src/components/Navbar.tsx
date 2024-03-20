@@ -1,6 +1,7 @@
 import logo from '../imgs/logo.png';
 
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 export default function Navbar() {
   return (
@@ -10,7 +11,12 @@ export default function Navbar() {
       </div>
       <div className="flex row justify-center gap-8 ml-8">
         <button className="font-medium hover:text-blue-400">Postagens</button>
-        <button className="font-medium hover:text-blue-400">Sobre</button>
+        <button className="font-medium hover:text-blue-400">
+          <HashLink smooth to={'/#sobre'}>
+            {' '}
+            Sobre
+          </HashLink>
+        </button>
       </div>
       <div className="flex row gap-8">
         <button className="font-medium hover:text-blue-400">

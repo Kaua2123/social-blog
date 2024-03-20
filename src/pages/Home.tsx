@@ -47,7 +47,10 @@ function Home() {
 
       <div>
         <section className="h-screen max-w-screen-xl mx-auto">
-          <div className="flex flex-col text-center justify-center items-center">
+          <div
+            id="sobre"
+            className="flex flex-col text-center justify-center items-center"
+          >
             <div className="w-1/2">
               <h2 className="font-poppins text-5xl mt-16 mb-8">
                 Seja bem-vindo ao nosso{' '}
