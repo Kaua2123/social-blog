@@ -1,8 +1,10 @@
 import { ArrowRight } from 'lucide-react';
 
 import xd from '../imgs/xd.jpg';
+import { Link } from 'react-router-dom';
 
-export default function Post() {
+export default function PostCard() {
+  const id = 1;
   return (
     <>
       <div
@@ -19,13 +21,15 @@ export default function Post() {
           </h1>
           <h3 className="font-poppins">Conteúdo do card aqui manow</h3>{' '}
           {/* 26 caracteres */}
-          <button
-            type="submit"
-            className=" font-poppins flex justify-between items-center hover:opacity-85 w-48 mt-8 font-medium text-white  transition-all bg-blue-400 rounded-md  p-2"
-          >
-            Ver post
-            <ArrowRight />
-          </button>
+          <Link to={`/${id}`}>
+            <button
+              type="submit"
+              className=" font-poppins flex justify-between items-center hover:opacity-85 w-48 mt-8 font-medium text-white  transition-all bg-blue-400 rounded-md  p-2"
+            >
+              Ver post
+              <ArrowRight />
+            </button>
+          </Link>
         </div>
       </div>
     </>

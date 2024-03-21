@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/home.tsx';
 import Login from './pages/login.tsx';
 import Posts from './pages/posts.tsx';
+import Post from './pages/post.tsx';
 
 import './index.css';
 
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/posts" element={<Posts />} />
+        <Route path="/:id" element={<Post />}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

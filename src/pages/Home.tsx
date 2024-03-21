@@ -26,22 +26,22 @@ function Home() {
               </div>
 
               <div className="flex flex-row gap-8  w-full">
-                <button
-                  className="shadow-lg shadow-blue-400 bg-gradient-to-r from-blue-400 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400
+                <Link to={'/login'} className="font-poppins">
+                  <button
+                    className="shadow-lg shadow-blue-400 bg-gradient-to-r from-blue-400 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400
               transition-all rounded-md w-32 p-2"
-                >
-                  <Link to={'/login'} className="font-poppins">
+                  >
                     Começar
-                  </Link>
-                </button>
-                <button
-                  className="shadow-lg shadow-blue-400 bg-gradient-to-r from-blue-400 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400
+                  </button>
+                </Link>
+                <HashLink smooth to={'/#sobre'} className="font-poppins">
+                  <button
+                    className="shadow-lg shadow-blue-400 bg-gradient-to-r from-blue-400 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400
                 transition-all rounded-md w-32 p-2"
-                >
-                  <HashLink smooth to={'/#sobre'} className="font-poppins">
+                  >
                     Saiba mais
-                  </HashLink>
-                </button>
+                  </button>
+                </HashLink>
               </div>
             </div>
             <div className="mb-28">
