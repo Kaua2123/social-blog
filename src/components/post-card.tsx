@@ -9,7 +9,7 @@ export default function PostCard() {
     <>
       <div
         style={{ height: '440px', width: '350px', minWidth: '350px' }}
-        className="flex flex-col shadow-md rounded-2xl"
+        className="flex flex-col shadow-lg rounded-2xl"
       >
         <div className="h-1/2">
           <img src={xd} className="w-full h-full rounded-t-2xl" alt="" />{' '}

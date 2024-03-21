@@ -7,7 +7,9 @@ export default function Navbar() {
   return (
     <div className="sticky flex row justify-between items-center p-1 shadow-sm">
       <div>
-        <img className="size-16 cursor-pointer" src={logo} alt="" />
+        <Link to={'/'}>
+          <img className="size-16 cursor-pointer" src={logo} alt="" />
+        </Link>
       </div>
       <div className="flex row justify-center gap-8 ml-8">
         <button className="font-medium hover:text-blue-400">
