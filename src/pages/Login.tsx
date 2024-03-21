@@ -25,7 +25,7 @@ export default function Login() {
                   onClick={() => {
                     setIsLogin(!isLogin);
                   }}
-                  className="font-medium text-blue-400 hover:opacity-85"
+                  className="font-medium  text-blue-400 hover:opacity-85"
                 >
                   {!isLogin && <p>Entre agora</p>}
                   {isLogin && <p>Criar conta</p>}
@@ -78,7 +78,7 @@ export default function Login() {
 
               <button
                 type="submit"
-                className="hover:opacity-85 mt-8 font-medium text-white shadow-md w-full shadow-blue-400 transition-all bg-blue-400 rounded-md p-2"
+                className="hover:opacity-85 mt-8 font-poppins font-medium text-white shadow-md w-full shadow-blue-400 transition-all bg-blue-400 rounded-md p-2"
               >
                 {isLogin && <p>Entrar </p>}
                 {!isLogin && <p> Criar conta </p>}

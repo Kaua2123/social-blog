@@ -10,10 +10,11 @@ export default function Navbar() {
         <img className="size-16 cursor-pointer" src={logo} alt="" />
       </div>
       <div className="flex row justify-center gap-8 ml-8">
-        <button className="font-medium hover:text-blue-400">Postagens</button>
+        <button className="font-medium hover:text-blue-400">
+          <Link to={'/posts'}> Postagens </Link>
+        </button>
         <button className="font-medium hover:text-blue-400">
           <HashLink smooth to={'/#sobre'}>
-            {' '}
             Sobre
           </HashLink>
         </button>
