@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 
-import xd from '../imgs/xd.jpg';
+import pixelArt from '../imgs/xd.jpg';
 import { Link } from 'react-router-dom';
 import { PostProtocol } from '../interfaces/post-protocol';
 
@@ -16,7 +16,7 @@ export default function PostCard({ post }: PostCardProps) {
         className="flex flex-col shadow-lg rounded-2xl"
       >
         <div className="h-1/2">
-          <img src={xd} className="w-full h-full rounded-t-2xl" alt="" />{' '}
+          <img src={pixelArt} className="w-full h-full rounded-t-2xl" alt="" />{' '}
           {/* imagem qualquer */}
         </div>
         <div className="p-8 h-1/2">
