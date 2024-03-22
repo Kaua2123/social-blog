@@ -2,8 +2,13 @@ import { ArrowRight } from 'lucide-react';
 
 import xd from '../imgs/xd.jpg';
 import { Link } from 'react-router-dom';
+import { PostProtocol } from '../interfaces/post-protocol';
 
-export default function PostCard() {
+export type PostCardProps = {
+  post: PostProtocol;
+};
+
+export default function PostCard({ post }: PostCardProps) {
   const id = 1;
   return (
     <>
@@ -17,7 +22,7 @@ export default function PostCard() {
         </div>
         <div className="p-8 h-1/2">
           <h1 className="font-poppins text-blue-400 font-medium text-xl mb-3">
-            TÍTULO
+            {post.title}
           </h1>
           <h3 className="font-poppins">Conteúdo do card aqui manow</h3>{' '}
           {/* 26 caracteres */}

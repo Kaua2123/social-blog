@@ -7,6 +7,7 @@ import axios from '../services/axios';
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const getPosts = async () => {
@@ -19,14 +20,18 @@ export default function Posts() {
     getPosts();
   }, []);
 
+  const postsPerPage = 3;
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
   return (
     <>
       <Navbar />
       <div className="grid grid-cols-3 m-20 gap-y-10">
         {posts ? (
-          posts.map((_, index) => (
-            // eslint-disable-next-line react/jsx-key
-            <PostCard key={index} />
+          currentPosts.map((post, index) => (
+            <PostCard key={index} post={post} />
           ))
         ) : (
           <h1 className="font-bold font-poppins">
@@ -35,13 +40,23 @@ export default function Posts() {
         )}
       </div>
       <div className="shadow-sm shadow-gray-300 flex justify-center items-center rounded-xl  m-24 h-20">
-        <ArrowLeft className="text-blue-400 cursor-pointer size-8 hover:text-black" />
+        <ArrowLeft
+          onClick={() => {
+            setCurrentPage(currentPage - 1);
+          }}
+          className="text-blue-400 cursor-pointer size-8 hover:text-black"
+        />
         <Dot className="text-blue-400 cursor-pointer size-8 hover:text-black" />
         <Dot className="text-blue-400 cursor-pointer size-8 hover:text-black" />
         <Dot className="text-blue-400 cursor-pointer size-8 hover:text-black" />
         <Dot className="text-blue-400 cursor-pointer size-8 hover:text-black" />
         <Dot className="text-blue-400 cursor-pointer size-8 hover:text-black" />
-        <ArrowRight className="text-blue-400 cursor-pointer size-8 hover:text-black" />
+        <ArrowRight
+          onClick={() => {
+            setCurrentPage(currentPage + 1);
+          }}
+          className="text-blue-400 cursor-pointer size-8 hover:text-black"
+        />
       </div>
     </>
   );
