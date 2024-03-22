@@ -20,10 +20,15 @@ export default function Posts() {
     getPosts();
   }, []);
 
-  const postsPerPage = 3;
+  const postsPerPage = 9;
+  const numbersOfPage = [];
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  for (let i = 1; i <= Math.ceil(posts.length / postsPerPage); i++) {
+    numbersOfPage.push(i);
+  }
 
   return (
     <>
@@ -46,11 +51,15 @@ export default function Posts() {
           }}
           className="text-blue-400 cursor-pointer size-8 hover:text-black"
         />
-        <Dot className="text-blue-400 cursor-pointer size-8 hover:text-black" />
-        <Dot className="text-blue-400 cursor-pointer size-8 hover:text-black" />
-        <Dot className="text-blue-400 cursor-pointer size-8 hover:text-black" />
-        <Dot className="text-blue-400 cursor-pointer size-8 hover:text-black" />
-        <Dot className="text-blue-400 cursor-pointer size-8 hover:text-black" />
+        {numbersOfPage.map((pageNumber) => (
+          <Dot
+            onClick={() => {
+              setCurrentPage(pageNumber);
+            }}
+            key={pageNumber}
+            className="text-blue-400 cursor-pointer size-8 hover:text-black"
+          />
+        ))}
         <ArrowRight
           onClick={() => {
             setCurrentPage(currentPage + 1);

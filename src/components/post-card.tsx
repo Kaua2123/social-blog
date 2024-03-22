@@ -9,7 +9,6 @@ export type PostCardProps = {
 };
 
 export default function PostCard({ post }: PostCardProps) {
-  const id = 1;
   return (
     <>
       <div
@@ -26,7 +25,7 @@ export default function PostCard({ post }: PostCardProps) {
           </h1>
           <h3 className="font-poppins">Conteúdo do card aqui manow</h3>{' '}
           {/* 26 caracteres */}
-          <Link to={`/${id}`}>
+          <Link to={`/${post.id}`}>
             <button
               type="submit"
               className=" font-poppins flex justify-between items-center hover:opacity-85 w-48 mt-8 font-medium text-white  transition-all bg-blue-400 rounded-md  p-2"
