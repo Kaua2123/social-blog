@@ -4,6 +4,7 @@ export type PostProtocol = {
   title: string;
   content: string;
   image: string;
+  image_url?: string;
   likes: number;
   tags: string;
   //   Comments: Comments

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { User } from 'lucide-react';
+
 import axios from '../services/axios';
 import Navbar from '../components/navbar';
-
-import pixelArt from '../imgs/xd.jpg';
-import { User } from 'lucide-react';
+import noImg from '../imgs/no-img.png';
 import PostCard from '../components/post-card';
 import { PostProtocol } from '../interfaces/post-protocol';
 
@@ -55,7 +55,7 @@ export default function Post() {
             <img
               className="rounded-2xl shadow-2xl"
               style={{ width: '420px', height: '300px' }}
-              src={pixelArt}
+              src={post.image_url ? post.image_url : noImg}
               alt=""
             />
             <div className="text-lg" style={{ width: '450px' }}>
