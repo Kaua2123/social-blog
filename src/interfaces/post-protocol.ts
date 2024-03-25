@@ -8,6 +8,7 @@ export type PostProtocol = {
   likes: number;
   tags: string;
   User: {
+    name: string;
     username: string;
     image: string;
     image_url: string;

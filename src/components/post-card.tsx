@@ -4,6 +4,7 @@ import noImg from '../imgs/no-img.png';
 import { Link } from 'react-router-dom';
 import { PostProtocol } from '../interfaces/post-protocol';
 import { addDotsOnLongContent } from '../utils/addDotsOnLongContent';
+import { addDotsOnLongTitle } from '../utils/addDotsOnLongTitle';
 
 export type PostCardProps = {
   post: PostProtocol;
@@ -11,6 +12,7 @@ export type PostCardProps = {
 
 export default function PostCard({ post }: PostCardProps) {
   const content = addDotsOnLongContent(post);
+  const title = addDotsOnLongTitle(post);
 
   return (
     <>
@@ -28,7 +30,7 @@ export default function PostCard({ post }: PostCardProps) {
 
         <div className="p-8 h-1/2">
           <h1 className="font-poppins text-blue-400 font-medium text-xl mb-3">
-            {post.title}
+            {title}
           </h1>
 
           <h3 className="font-poppins">{content}</h3>

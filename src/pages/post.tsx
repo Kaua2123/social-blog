@@ -94,7 +94,7 @@ export default function Post() {
           </div>
           <div className="m-28 flex flex-row gap-8 items-center">
             <div>
-              {post.User.image ? (
+              {post.User && post.User.image ? (
                 <img
                   className="rounded-2xl shadow-lg w-36"
                   src={post.User.image_url}
@@ -107,7 +107,7 @@ export default function Post() {
             <div className="font-poppins text-4xl">
               <h1>O autor</h1>
               <h1 className="font-bold text-blue-400">
-                {post.User.username ? post.User.username : 'Nome do Autor'}
+                {post.User && post.User.name ? post.User.name : 'Nome do Autor'}
               </h1>
             </div>
           </div>
