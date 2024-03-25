@@ -20,7 +20,7 @@ export default function PostCard({ post }: PostCardProps) {
       >
         <div className="h-1/2">
           <img
-            src={post.image_url ? post.image_url : noImg}
+            src={post.image ? post.image_url : noImg}
             className="w-full h-full rounded-t-2xl"
             alt=""
           />

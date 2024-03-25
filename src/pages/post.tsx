@@ -41,8 +41,6 @@ export default function Post() {
     relatedPosts.length < 3 ? relatedPosts.push(post) : relatedPosts,
   );
 
-  console.log(post);
-
   return (
     <>
       <Navbar />
@@ -55,7 +53,7 @@ export default function Post() {
             <img
               className="rounded-2xl shadow-2xl"
               style={{ width: '420px', height: '300px' }}
-              src={post.image_url ? post.image_url : noImg}
+              src={post.image ? post.image_url : noImg}
               alt=""
             />
             <div className="text-lg" style={{ width: '450px' }}>
