@@ -6,10 +6,10 @@ export const addDotsOnLongContent = (post: PostProtocol) => {
   if (slicedContent.length < 25) return post.content;
 
   const splitedContent = slicedContent.split(' ');
-  console.log(splitedContent);
+
   const lastWord = splitedContent[splitedContent.length - 1];
+
   const replaced = slicedContent.replace(lastWord, '...');
-  console.log(slicedContent);
 
   return replaced;
 };
