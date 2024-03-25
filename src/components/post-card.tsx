@@ -3,12 +3,15 @@ import { ArrowRight } from 'lucide-react';
 import noImg from '../imgs/no-img.png';
 import { Link } from 'react-router-dom';
 import { PostProtocol } from '../interfaces/post-protocol';
+import { addDotsOnLongContent } from '../utils/addDotsOnLongContent';
 
 export type PostCardProps = {
   post: PostProtocol;
 };
 
 export default function PostCard({ post }: PostCardProps) {
+  const content = addDotsOnLongContent(post);
+
   return (
     <>
       <div
@@ -20,15 +23,16 @@ export default function PostCard({ post }: PostCardProps) {
             src={post.image_url ? post.image_url : noImg}
             className="w-full h-full rounded-t-2xl"
             alt=""
-          />{' '}
-          {/* imagem qualquer */}
+          />
         </div>
+
         <div className="p-8 h-1/2">
           <h1 className="font-poppins text-blue-400 font-medium text-xl mb-3">
             {post.title}
           </h1>
-          <h3 className="font-poppins">Conteúdo do card aqui manow</h3>{' '}
-          {/* 26 caracteres */}
+
+          <h3 className="font-poppins">{content}</h3>
+
           <Link to={`/${post.id}`}>
             <button
               type="submit"
