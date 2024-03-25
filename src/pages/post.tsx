@@ -94,7 +94,15 @@ export default function Post() {
           </div>
           <div className="m-28 flex flex-row gap-8 items-center">
             <div>
-              <User size={90} />
+              {post.User.image ? (
+                <img
+                  className="rounded-2xl shadow-lg w-36"
+                  src={post.User.image_url}
+                  alt=""
+                />
+              ) : (
+                <User size={90} />
+              )}
             </div>
             <div className="font-poppins text-4xl">
               <h1>O autor</h1>

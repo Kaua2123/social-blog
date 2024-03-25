@@ -9,5 +9,7 @@ export type PostProtocol = {
   tags: string;
   User: {
     username: string;
+    image: string;
+    image_url: string;
   };
 };
