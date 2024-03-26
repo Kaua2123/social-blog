@@ -1,10 +1,11 @@
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 import noImg from '../imgs/no-img.png';
-import { Link } from 'react-router-dom';
 import { PostProtocol } from '../interfaces/post-protocol';
 import { addDotsOnLongContent } from '../utils/addDotsOnLongContent';
 import { addDotsOnLongTitle } from '../utils/addDotsOnLongTitle';
+import { scrollToTop } from '../utils/scrollToTop';
 
 export type PostCardProps = {
   post: PostProtocol;
@@ -35,7 +36,7 @@ export default function PostCard({ post }: PostCardProps) {
 
           <h3 className="font-poppins">{content}</h3>
 
-          <Link to={`/${post.id}`}>
+          <Link to={`/${post.id}`} onClick={scrollToTop}>
             <button
               type="submit"
               className=" font-poppins flex justify-between items-center hover:opacity-85 w-48 mt-8 font-medium text-white  transition-all bg-blue-400 rounded-md  p-2"

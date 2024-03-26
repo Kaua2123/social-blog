@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Heart, MessageCircle, Share, User } from 'lucide-react';
+import { Calendar, Heart, MessageCircle, Share, User } from 'lucide-react';
 
 import axios from '../services/axios';
 import Navbar from '../components/navbar';
@@ -8,11 +8,15 @@ import noImg from '../imgs/no-img.png';
 import PostCard from '../components/post-card';
 import { PostProtocol } from '../interfaces/post-protocol';
 import Footer from '../components/footer';
+import { formatDate } from '../utils/formatDate';
+import Tags from '../components/tags';
 
 export default function Post() {
   const { id } = useParams();
   const [post, setPost] = useState<PostProtocol>();
   const [posts, setPosts] = useState<PostProtocol[]>([]);
+  const postDate = formatDate(post?.created_at);
+  const relatedPosts: PostProtocol[] = [];
 
   useEffect(() => {
     const getPost = async () => {
@@ -36,13 +40,9 @@ export default function Post() {
     getPosts();
   }, []);
 
-  const relatedPosts: PostProtocol[] = [];
-
   posts.map((post) =>
     relatedPosts.length < 3 ? relatedPosts.push(post) : relatedPosts,
   );
-
-  console.log(post);
 
   return (
     <>
@@ -51,9 +51,19 @@ export default function Post() {
         <>
           <div className="">
             <div className="m-20 flex flex-col gap-14 items-center h-auto">
-              <h1 className="text-5xl text-center font-poppins font-bold text-blue-400">
-                {post.title}
-              </h1>
+              <div className="flex flex-col gap-8">
+                <div className="flex flex-row items-center justify-center gap-8">
+                  <p className="flex gap-3">
+                    <Calendar />
+                    {postDate}
+                  </p>
+                  <Tags tags={post.tags} />
+                </div>
+                <h1 className="text-5xl text-center font-poppins font-bold text-blue-400">
+                  {post.title}
+                </h1>
+              </div>
+
               <img
                 className="rounded-2xl shadow-2xl"
                 style={{ width: '420px', height: '300px' }}
