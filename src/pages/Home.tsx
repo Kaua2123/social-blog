@@ -5,6 +5,7 @@ import social from '../imgs/svg/img-social-home-blue.svg';
 
 import { Forward, MessageCircle, Pencil } from 'lucide-react';
 import { HashLink } from 'react-router-hash-link';
+import Footer from '../components/footer';
 
 function Home() {
   return (
@@ -125,6 +126,7 @@ function Home() {
           </div>
         </section>
       </div>
+      <Footer />
     </>
   );
 }

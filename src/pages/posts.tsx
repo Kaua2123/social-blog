@@ -1,8 +1,9 @@
 import { ArrowRight, ArrowLeft, Dot } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import Navbar from '../components/navbar';
+import Footer from '../components/footer';
 import PostCard from '../components/post-card';
-import { useEffect, useState } from 'react';
 import axios from '../services/axios';
 import { PostProtocol } from '../interfaces/post-protocol';
 
@@ -72,6 +73,7 @@ export default function Posts() {
           />
         </div>
       )}
+      <Footer />
     </>
   );
 }

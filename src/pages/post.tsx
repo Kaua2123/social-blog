@@ -7,6 +7,7 @@ import Navbar from '../components/navbar';
 import noImg from '../imgs/no-img.png';
 import PostCard from '../components/post-card';
 import { PostProtocol } from '../interfaces/post-protocol';
+import Footer from '../components/footer';
 
 export default function Post() {
   const { id } = useParams();
@@ -129,6 +130,7 @@ export default function Post() {
           Ops! Parece que o post não foi encontrado.
         </h1>
       )}
+      <Footer />
     </>
   );
 }

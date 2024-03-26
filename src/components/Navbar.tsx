@@ -5,7 +5,7 @@ import { HashLink } from 'react-router-hash-link';
 
 export default function Navbar() {
   return (
-    <div className="sticky flex row justify-between items-center p-1 shadow-sm">
+    <div className="sticky flex row justify-between items-center  p-1 shadow-sm">
       <div>
         <Link to={'/'}>
           <img className="size-16 cursor-pointer" src={logo} alt="" />
