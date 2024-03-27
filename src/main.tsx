@@ -8,9 +8,11 @@ import Posts from './pages/posts.tsx';
 import Post from './pages/post.tsx';
 
 import './index.css';
+import { Toaster } from 'react-hot-toast';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <Toaster />
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />

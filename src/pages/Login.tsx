@@ -1,9 +1,22 @@
 import { Mail, User, LockKeyhole } from 'lucide-react';
 import login from '../imgs/svg/blog-post-logincadastro.svg';
 import { useState } from 'react';
+import axios from '../services/axios';
+import toast from 'react-hot-toast';
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(false);
+
+  const postUser = async () => {
+    await axios
+      .post('/user/post')
+      .then(() => toast.success('Sucesso'))
+      .catch(() => toast.error('Erro'));
+  };
+
+  const loginUser = async () => {
+    console.log('login');
+  };
 
   return (
     <>
@@ -77,7 +90,8 @@ export default function Login() {
               </div>
 
               <button
-                type="submit"
+                type="button"
+                onClick={!isLogin ? postUser : loginUser}
                 className="hover:opacity-85 mt-8 font-poppins font-medium text-white shadow-md w-full shadow-blue-400 transition-all bg-blue-400 rounded-md p-2"
               >
                 {isLogin && <p>Entrar </p>}
