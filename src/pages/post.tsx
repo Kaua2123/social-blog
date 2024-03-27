@@ -3,14 +3,17 @@ import { useParams } from 'react-router-dom';
 import { Calendar, Heart, MessageCircle, Share, User } from 'lucide-react';
 
 import axios from '../services/axios';
-import Navbar from '../components/navbar';
+
 import noImg from '../imgs/no-img.png';
-import PostCard from '../components/post-card';
-import { PostProtocol } from '../interfaces/post-protocol';
-import Footer from '../components/footer';
 import { formatDate } from '../utils/formatDate';
-import Tags from '../components/tags';
+
+import { PostProtocol } from '../interfaces/post-protocol';
+
+import Navbar from '../components/navbar';
+import PostCard from '../components/post-card';
+import Footer from '../components/footer';
 import Comments from '../components/comments';
+import Tags from '../components/tags';
 
 export default function Post() {
   const { id } = useParams();
@@ -54,7 +57,7 @@ export default function Post() {
             <div className="m-20 flex flex-col gap-14 items-center h-auto">
               <div className="flex flex-col gap-8">
                 <div className="flex flex-row items-center justify-center gap-8">
-                  <p className="flex gap-3">
+                  <p className="text-gray-500 flex gap-3">
                     <Calendar />
                     {postDate}
                   </p>
@@ -135,7 +138,7 @@ export default function Post() {
               ))}
             </div>
           </div>
-          <Comments />
+          <Comments comments={post.Comments} />
         </>
       ) : (
         <h1 className="text-5xl font-poppins">

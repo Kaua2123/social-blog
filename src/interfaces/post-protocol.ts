@@ -1,3 +1,6 @@
+import { CommentsProtocol } from './comments-protocol';
+import { UserProtocol } from './user-protocol';
+
 export type PostProtocol = {
   id: number;
   user_id: number;
@@ -9,10 +12,6 @@ export type PostProtocol = {
   tags: string;
   created_at: Date;
   updated_at: Date;
-  User: {
-    name: string;
-    username: string;
-    image: string;
-    image_url: string;
-  };
+  User: UserProtocol;
+  Comments: CommentsProtocol[];
 };

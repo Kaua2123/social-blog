@@ -44,11 +44,11 @@ export default function Login() {
                   type="text"
                   name=""
                   id=""
-                  //   placeholder="seuemail@gmail.com"
+                  placeholder="Como quer ser chamado..."
                 />
               </div>
 
-              <label htmlFor="" className="block">
+              <label htmlFor="" className="block mt-2">
                 Endereço de Email
               </label>
               <div className="relative flex items-center text-gray-400 focus-within:text-blue-400">
@@ -58,7 +58,7 @@ export default function Login() {
                   type="text"
                   name=""
                   id=""
-                  //   placeholder="seuemail@gmail.com"
+                  placeholder="Seu endereço de email..."
                 />
               </div>
 
@@ -72,7 +72,7 @@ export default function Login() {
                   type="text"
                   name=""
                   id=""
-                  //   placeholder="seuemail@gmail.com"
+                  placeholder="Sua senha..."
                 />
               </div>
 
