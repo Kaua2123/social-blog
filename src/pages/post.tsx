@@ -10,6 +10,7 @@ import { PostProtocol } from '../interfaces/post-protocol';
 import Footer from '../components/footer';
 import { formatDate } from '../utils/formatDate';
 import Tags from '../components/tags';
+import Comments from '../components/comments';
 
 export default function Post() {
   const { id } = useParams();
@@ -134,6 +135,7 @@ export default function Post() {
               ))}
             </div>
           </div>
+          <Comments />
         </>
       ) : (
         <h1 className="text-5xl font-poppins">
