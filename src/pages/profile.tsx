@@ -1,11 +1,43 @@
-import { User, Camera, Mail, LockKeyhole } from 'lucide-react';
+import { User, Camera, Mail, LockKeyhole, LogOut } from 'lucide-react';
+import { useState } from 'react';
 import { tokenDecoder } from '../utils/tokenDecoder';
 import Navbar from '../components/navbar';
+import toast from 'react-hot-toast';
+import axios from '../services/axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const token = localStorage.getItem('token');
-
   const decodedToken = tokenDecoder(token);
+  const navigate = useNavigate();
+
+  const updateUser = async () => {
+    console.log(email, password);
+    if (!email || !password)
+      return toast.error(
+        'Você deve pelo menos confirmar o email e a senha, digitando os mesmos novamente.',
+      );
+
+    await axios
+      .put(`/user/update/${decodedToken?.id}`, {
+        name,
+        username,
+        email,
+        password,
+      })
+      .then((response) => {
+        console.log(response.data);
+        toast.success('Dados atualizados com sucesso.');
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error('Ocorreu um erro');
+      });
+  };
 
   return (
     <>
@@ -51,6 +83,7 @@ export default function Profile() {
                 <div className="relative flex items-center mb-2 text-gray-400 focus-within:text-blue-400">
                   <User className="absolute w-5 h-5 ml-4 mt-2.5 pointer-events-none" />
                   <input
+                    onChange={(e) => setName(e.target.value)}
                     className="pr-3 pl-12 rounded-md w-full placeholder-gray-500 text-black border border-gray-400 focus:border-blue-400 transition-all outline-none mt-3 p-2 "
                     type="text"
                     name=""
@@ -64,6 +97,7 @@ export default function Profile() {
                 <div className="relative flex items-center text-gray-400 focus-within:text-blue-400">
                   <User className="absolute w-5 h-5 ml-4 mt-2.5 pointer-events-none" />
                   <input
+                    onChange={(e) => setUsername(e.target.value)}
                     className="pr-3 pl-12 rounded-md w-full placeholder-gray-500 text-black border border-gray-400 focus:border-blue-400 transition-all outline-none mt-3 p-2 "
                     type="text"
                     name=""
@@ -80,6 +114,7 @@ export default function Profile() {
                 <div className="relative flex items-center mb-2 text-gray-400 focus-within:text-blue-400">
                   <Mail className="absolute w-5 h-5 ml-4 mt-2.5 " />
                   <input
+                    onChange={(e) => setEmail(e.target.value)}
                     className="pr-3 pl-12 rounded-md w-full placeholder-gray-500 text-black border mt-3 border-gray-400 focus:border-blue-400 transition-all outline-none p-2"
                     type="email"
                     name=""
@@ -94,6 +129,7 @@ export default function Profile() {
                 <div className="relative flex items-center text-gray-400 focus-within:text-blue-400">
                   <LockKeyhole className="absolute w-5 h-5 ml-4 mt-2.5 " />
                   <input
+                    onChange={(e) => setPassword(e.target.value)}
                     className="pr-3 pl-12 rounded-md w-full placeholder-gray-500 text-black border mt-3 border-gray-400 focus:border-blue-400 transition-all outline-none p-2"
                     type="password"
                     name=""
@@ -106,11 +142,25 @@ export default function Profile() {
           </form>
           <button
             type="button"
+            onClick={updateUser}
             className="hover:opacity-85 mt-8 font-poppins font-medium text-white w-full shadow-blue-400 transition-all bg-blue-400 rounded-md p-2"
           >
             Atualizar
           </button>
         </div>
+      </div>
+      <div className="absolute flex gap-2 rounded-lg bg-blue-400 right-10">
+        <button
+          onClick={() => {
+            localStorage.removeItem('token');
+            toast.success('Você saiu da conta.');
+            navigate('/');
+          }}
+          className="hover:opacity-85  flex gap-4 font-poppins font-medium text-white w-full shadow-blue-400 transition-all bg-blue-400 rounded-md p-3"
+        >
+          <p className="text-white">Sair</p>
+          <LogOut className="text-white" />
+        </button>
       </div>
     </>
   );

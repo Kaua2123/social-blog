@@ -41,8 +41,9 @@ export default function Login() {
     await axios
       .post('/login', { email, password })
       .then((response) => {
-        console.log(response);
-        localStorage.setItem('token', response.data.token);
+        const { token } = response.data;
+        localStorage.setItem('token', token);
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
         toast.success('Você entrou na conta.');
         setTimeout(() => {
           navigate('/');
