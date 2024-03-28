@@ -151,7 +151,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={!isLogin ? postUser : loginUser}
-                className="hover:opacity-85 mt-8 font-poppins font-medium text-white shadow-md w-full shadow-blue-400 transition-all bg-blue-400 rounded-md p-2"
+                className="hover:opacity-85 mt-8 font-poppins font-medium text-white w-full shadow-blue-400 transition-all bg-blue-400 rounded-md p-2"
               >
                 {isLogin && <p>Entrar </p>}
                 {!isLogin && <p> Criar conta </p>}

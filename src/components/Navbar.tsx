@@ -1,9 +1,13 @@
+import { User } from 'lucide-react';
+import { Bell } from 'lucide-react';
 import logo from '../imgs/logo.png';
 
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
 export default function Navbar() {
+  const token = localStorage.getItem('token');
+
   return (
     <div className="sticky flex row justify-between items-center  p-1 shadow-sm">
       <div>
@@ -15,20 +19,32 @@ export default function Navbar() {
         <button className="font-medium hover:text-blue-400">
           <Link to={'/posts'}> Postagens </Link>
         </button>
+        {token && (
+          <button className="font-medium hover:text-blue-400">
+            <Link to={'/posts'}> Meus posts </Link>
+          </button>
+        )}
         <button className="font-medium hover:text-blue-400">
           <HashLink smooth to={'/#sobre'}>
             Sobre
           </HashLink>
         </button>
       </div>
-      <div className="flex row gap-8">
-        <button className="font-medium hover:text-blue-400">
-          <Link to={'/login'}> Login </Link>
-        </button>
-        <button className="font-medium hover:text-blue-400">
-          <Link to={'/login'}> Cadastre-se </Link>
-        </button>
-      </div>
+      {token ? (
+        <div className="mr-10 flex items-center gap-5">
+          <Bell size={22} cursor={'pointer'} />
+
+          <Link to={'/profile'} className="border-black border rounded-full">
+            <User size={40} />
+          </Link>
+        </div>
+      ) : (
+        <div className="flex row gap-8 mr-4">
+          <button className="font-medium hover:text-blue-400 mr-8">
+            <Link to={'/login'}> Entrar </Link>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
