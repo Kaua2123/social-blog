@@ -1,9 +1,10 @@
 import { Mail, User, LockKeyhole } from 'lucide-react';
-import login from '../imgs/svg/blog-post-logincadastro.svg';
 import { useState } from 'react';
-import axios from '../services/axios';
 import toast from 'react-hot-toast';
-import { isEmail } from 'validator';
+import { useNavigate } from 'react-router-dom';
+
+import login from '../imgs/svg/blog-post-logincadastro.svg';
+import axios from '../services/axios';
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(false);
@@ -11,32 +12,48 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const validation = () => {
+  const postUser = async () => {
     if (!name || !username || !email || !password)
       return toast.error('Preencha todos os campos');
-
-    if (!isEmail(email)) return toast.error('Email inválido');
 
     if (password.length < 3 || password.length > 24)
       return toast.error(
         'Senha deve ter entre 3 e 24 caracteres para uma maior segurança',
       );
-  };
-
-  const postUser = async () => {
-    validation();
 
     await axios
       .post('/user/post', { name, username, email, password })
       .then(() => {
         toast.success('Cadastrado com sucesso.');
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        if (error.response.status == '500')
+          toast.error('Ocorreu um erro ao se cadastrar');
+      });
   };
 
   const loginUser = async () => {
-    console.log('login');
+    if (!email || !password) return toast.error('Preencha todos os campos');
+
+    await axios
+      .post('/login', { email, password })
+      .then((response) => {
+        console.log(response);
+        localStorage.setItem('token', response.data.token);
+        toast.success('Você entrou na conta.');
+        setTimeout(() => {
+          navigate('/');
+        }, 1000);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data);
+        if (error.response.status == '500')
+          toast.error('Ocorreu um erro ao se cadastrar');
+      });
   };
 
   return (
@@ -68,35 +85,38 @@ export default function Login() {
             </div>
 
             <form action="">
-              <label htmlFor="" className="block">
-                Nome Completo
-              </label>
-              <div className="relative flex items-center text-gray-400 focus-within:text-blue-400">
-                <User className="absolute w-5 h-5 ml-4 mt-2.5 pointer-events-none" />
-                <input
-                  onChange={(e) => setName(e.target.value)}
-                  className="pr-3 pl-12 rounded-md w-full placeholder-gray-500 text-black border border-gray-400 focus:border-blue-400 transition-all outline-none mt-3 p-2 "
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="Seu nome"
-                />
-              </div>
-
-              <label htmlFor="" className="block">
-                Apelido
-              </label>
-              <div className="relative flex items-center text-gray-400 focus-within:text-blue-400">
-                <User className="absolute w-5 h-5 ml-4 mt-2.5 pointer-events-none" />
-                <input
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="pr-3 pl-12 rounded-md w-full placeholder-gray-500 text-black border border-gray-400 focus:border-blue-400 transition-all outline-none mt-3 p-2 "
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="Como quer ser chamado"
-                />
-              </div>
+              {!isLogin && (
+                <>
+                  <label htmlFor="" className="block">
+                    Nome Completo
+                  </label>
+                  <div className="relative flex items-center text-gray-400 focus-within:text-blue-400">
+                    <User className="absolute w-5 h-5 ml-4 mt-2.5 pointer-events-none" />
+                    <input
+                      onChange={(e) => setName(e.target.value)}
+                      className="pr-3 pl-12 rounded-md w-full placeholder-gray-500 text-black border border-gray-400 focus:border-blue-400 transition-all outline-none mt-3 p-2 "
+                      type="text"
+                      name=""
+                      id=""
+                      placeholder="Seu nome"
+                    />
+                  </div>
+                  <label htmlFor="" className="block">
+                    Apelido
+                  </label>
+                  <div className="relative flex items-center text-gray-400 focus-within:text-blue-400">
+                    <User className="absolute w-5 h-5 ml-4 mt-2.5 pointer-events-none" />
+                    <input
+                      onChange={(e) => setUsername(e.target.value)}
+                      className="pr-3 pl-12 rounded-md w-full placeholder-gray-500 text-black border border-gray-400 focus:border-blue-400 transition-all outline-none mt-3 p-2 "
+                      type="text"
+                      name=""
+                      id=""
+                      placeholder="Como quer ser chamado"
+                    />
+                  </div>
+                </>
+              )}
 
               <label htmlFor="" className="block mt-2">
                 Endereço de Email
