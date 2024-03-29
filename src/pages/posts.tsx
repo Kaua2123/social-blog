@@ -6,6 +6,8 @@ import Footer from '../components/footer';
 import PostCard from '../components/post-card';
 import axios from '../services/axios';
 import { PostProtocol } from '../interfaces/post-protocol';
+import CardSkeleton from '../components/card-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export default function Posts() {
   const [posts, setPosts] = useState<PostProtocol[]>([]);
@@ -41,11 +43,11 @@ export default function Posts() {
             <PostCard key={index} post={post} />
           ))
         ) : (
-          <div className=" items-center w-full justify-center">
-            <h1 className="font-bold text-5xl text-blue-400 font-poppins">
-              Parece que não há posts disponíveis...
-            </h1>
-          </div>
+          <>
+            {Array.from({ length: 9 }).map((_, index) => (
+              <CardSkeleton key={index} />
+            ))}
+          </>
         )}
       </div>
       {posts.length > 0 && (

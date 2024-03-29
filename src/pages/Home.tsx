@@ -11,6 +11,7 @@ function Home() {
   return (
     <>
       <Navbar />
+
       <div className="shadow-sm bg-gradient-to-br from-white via-white to-blue-100">
         <section className="h-screen max-w-screen-xl mx-auto">
           <div className="grid grid-cols-2 justify-center items-center h-screen">

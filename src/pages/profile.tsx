@@ -46,7 +46,7 @@ export default function Profile() {
         <div className="w-full h-full flex flex-wrap items-center justify-center ">
           <div className="p-3 flex flex-col items-center gap-8">
             <h1 className="text-blue-400 font-poppins font-medium text-5xl">
-              Olá, {decodedToken?.name}
+              Meu Perfil
             </h1>
             <div className="rounded-full p-8 border border-black">
               <User className="" size={100} />
