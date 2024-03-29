@@ -38,7 +38,7 @@ export default function Posts() {
     <>
       <Navbar />
       <div className="grid grid-cols-3 m-20 gap-y-10">
-        {posts.length > 0 ? (
+        {posts && posts.length > 0 ? (
           currentPosts.map((post, index) => (
             <PostCard key={index} post={post} />
           ))

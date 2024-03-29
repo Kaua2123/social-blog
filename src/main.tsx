@@ -6,6 +6,7 @@ import Home from './pages/home.tsx';
 import Login from './pages/login.tsx';
 import Posts from './pages/posts.tsx';
 import Post from './pages/post.tsx';
+import MyPosts from './pages/my-posts.tsx';
 import Profile from './pages/profile.tsx';
 
 import './index.css';
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/posts" element={<Posts />} />
+          <Route path="/myPosts" element={<MyPosts />} />
           <Route path="/:id" element={<Post />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>

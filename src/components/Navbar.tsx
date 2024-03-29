@@ -21,7 +21,7 @@ export default function Navbar() {
         </button>
         {token && (
           <button className="font-medium hover:text-blue-400">
-            <Link to={'/posts'}> Meus posts </Link>
+            <Link to={'/myPosts'}> Meus posts </Link>
           </button>
         )}
         <button className="font-medium hover:text-blue-400">
