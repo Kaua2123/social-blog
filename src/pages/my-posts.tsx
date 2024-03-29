@@ -1,14 +1,20 @@
 import { useEffect, useState } from 'react';
-import Navbar from '../components/navbar';
-import PostCard from '../components/post-card';
-import { PostProtocol } from '../interfaces/post-protocol';
-import axios from '../services/axios';
 import { FileText, Tags, Text } from 'lucide-react';
+import toast from 'react-hot-toast';
+
 import { tokenDecoder } from '../utils/tokenDecoder';
+import axios from '../services/axios';
+import { PostProtocol } from '../interfaces/post-protocol';
+import PostCard from '../components/post-card';
 import Loader from '../components/loader';
+import Navbar from '../components/navbar';
 
 export default function MyPosts() {
   const [posts, setPosts] = useState<PostProtocol[]>([]);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [tags, setTags] = useState('');
+  const [image] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   //   const [currentPage, setCurrentPage] = useState(1);
   const token = localStorage.getItem('token');
@@ -16,17 +22,40 @@ export default function MyPosts() {
 
   useEffect(() => {
     const getUserPosts = async () => {
+      axios.defaults.headers.Authorization = `Bearer ${token}`;
+
       await axios
         .get(`/userPosts/${decodedToken?.id}`)
         .then((response) => {
           setPosts(response.data);
           setIsLoading(false);
         })
-        .catch((e) => console.log(e));
+        .catch((e) => {
+          console.log(e);
+          setIsLoading(false);
+        });
     };
 
     getUserPosts();
   });
+
+  const createPost = async () => {
+    axios.defaults.headers.Authorization = `Bearer ${token}`;
+    const user_id = decodedToken?.id;
+    setIsLoading(true);
+    await axios
+      .post('/post/create', { title, content, image, tags, user_id })
+      .then((response) => {
+        console.log(response.data);
+        setIsLoading(false);
+        toast.success('Post criado com sucesso.');
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        toast.error('Erro ao criar post.');
+      });
+  };
 
   return (
     <>
@@ -58,6 +87,7 @@ export default function MyPosts() {
                   <div className="relative flex items-center text-gray-400 focus-within:text-blue-400">
                     <FileText className="absolute w-5 h-5 ml-4 mt-2.5 pointer-events-none" />
                     <input
+                      onChange={(e) => setTitle(e.target.value)}
                       className="pr-3 pl-12 rounded-md w-full placeholder-gray-500 text-black border border-gray-400 focus:border-blue-400 transition-all outline-none mt-3 p-2 "
                       type="text"
                       name=""
@@ -71,6 +101,7 @@ export default function MyPosts() {
                   <div className="relative flex items-center text-gray-400 focus-within:text-blue-400">
                     <Text className="absolute w-5 h-5 ml-4 mt-2.5 pointer-events-none" />
                     <textarea
+                      onChange={(e) => setContent(e.target.value)}
                       className="pr-3 pl-12 rounded-md w-full placeholder-gray-500 text-black border border-gray-400 focus:border-blue-400 transition-all outline-none mt-3 p-2 "
                       name=""
                       id=""
@@ -85,6 +116,7 @@ export default function MyPosts() {
                 <div className="relative flex items-center text-gray-400 focus-within:text-blue-400">
                   <Tags className="absolute w-5 h-5 ml-4 mt-2.5 " />
                   <input
+                    onChange={(e) => setTags(e.target.value)}
                     className="pr-3 pl-12 rounded-md w-full placeholder-gray-500 text-black border mt-3 border-gray-400 focus:border-blue-400 transition-all outline-none p-2"
                     type="email"
                     name=""
@@ -94,6 +126,7 @@ export default function MyPosts() {
                 </div>
 
                 <button
+                  onClick={createPost}
                   type="button"
                   className="hover:opacity-85 mt-8 font-poppins font-medium text-white w-full shadow-blue-400 transition-all bg-blue-400 rounded-md p-2"
                 >
