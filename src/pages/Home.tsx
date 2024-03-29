@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     setTimeout(() => {
@@ -42,7 +43,10 @@ function Home() {
                   </div>
 
                   <div className="flex flex-row gap-8  w-full">
-                    <Link to={'/login'} className="font-poppins">
+                    <Link
+                      to={token ? '/posts' : '/login'}
+                      className="font-poppins"
+                    >
                       <button
                         className="shadow-lg shadow-blue-400 bg-gradient-to-r from-blue-400 to-blue-500 text-white hover:from-blue-500 hover:to-blue-400
                 transition-all rounded-md w-32 p-2"

@@ -1,4 +1,4 @@
-import { Mail, User, LockKeyhole } from 'lucide-react';
+import { Mail, User, LockKeyhole, ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -59,6 +59,17 @@ export default function Login() {
 
   return (
     <>
+      <div className="absolute top-0 p-8">
+        <button
+          onClick={() => {
+            navigate('/');
+          }}
+          className="hover:opacity-85  flex gap-4 font-poppins font-medium text-white w-full shadow-blue-400 transition-all bg-blue-400 rounded-md p-3"
+        >
+          <ArrowLeft className="text-white" />
+          <p className="text-white">Voltar</p>
+        </button>
+      </div>
       <section className="h-full w-full">
         <div className="flex flex-row">
           <div className="w-1/2 p-20">
