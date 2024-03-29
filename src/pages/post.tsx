@@ -14,11 +14,13 @@ import PostCard from '../components/post-card';
 import Footer from '../components/footer';
 import Comments from '../components/comments';
 import Tags from '../components/tags';
+import Loader from '../components/loader';
 
 export default function Post() {
   const { id } = useParams();
   const [post, setPost] = useState<PostProtocol>();
   const [posts, setPosts] = useState<PostProtocol[]>([]);
+  const [isLoading] = useState(true);
   const postDate = formatDate(post?.created_at);
   const relatedPosts: PostProtocol[] = [];
 
@@ -141,9 +143,7 @@ export default function Post() {
           <Comments comments={post.Comments} />
         </>
       ) : (
-        <h1 className="text-5xl font-poppins">
-          Ops! Parece que o post não foi encontrado.
-        </h1>
+        <Loader isLoading={isLoading} />
       )}
       <Footer />
     </>
