@@ -1,13 +1,36 @@
-import { Heart, MessageCircle, User } from 'lucide-react';
+import { Heart, MessageCircle, SendHorizonal, User } from 'lucide-react';
 import { CommentsProtocol } from '../interfaces/comments-protocol';
 import { formatDate } from '../utils/formatDate';
+import axios from '../services/axios';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { tokenDecoder } from '../utils/tokenDecoder';
 
 export type CommentsProps = {
   comments: CommentsProtocol[];
+  post_id: number;
 };
 
-export default function Comments({ comments }: CommentsProps) {
+export default function Comments({ comments, post_id }: CommentsProps) {
+  const [content, setContent] = useState('');
   const commentDate = comments.map((comment) => formatDate(comment.createdAt));
+  const token = localStorage.getItem('token');
+  const user_id = tokenDecoder(token)?.id;
+
+  const postComments = async () => {
+    axios.defaults.headers.Authorization = `Bearer ${token}`;
+
+    await axios
+      .post('comment/store', { content, user_id, post_id })
+      .then((response) => {
+        console.log(response);
+        toast.success('Comentário enviado.');
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data);
+      });
+  };
 
   return (
     <>
@@ -18,11 +41,18 @@ export default function Comments({ comments }: CommentsProps) {
         <div className="flex gap-8 items-center">
           <User size={60} />
           <input
+            onChange={(e) => setContent(e.target.value)}
             placeholder="Digite algo..."
             className="rounded-md
-            pl-10 p-2 w-full outline-none
+            pl-10 p-2 w-10/12 outline-none
             flex items-center gap-20 border border-black"
           />
+          <button
+            onClick={postComments}
+            className="bg-blue-400 text-white p-3 rounded-full hover:opacity-85"
+          >
+            <SendHorizonal />
+          </button>
         </div>
       </div>
 

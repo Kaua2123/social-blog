@@ -162,7 +162,7 @@ export default function Post() {
               ))}
             </div>
           </div>
-          <Comments comments={post.Comments} />
+          <Comments comments={post.Comments} post_id={post.id} />
         </>
       ) : (
         <Loader isLoading={isLoading} />
