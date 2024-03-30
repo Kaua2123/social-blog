@@ -15,6 +15,8 @@ import Footer from '../components/footer';
 import Comments from '../components/comments';
 import Tags from '../components/tags';
 import Loader from '../components/loader';
+import { tokenDecoder } from '../utils/tokenDecoder';
+import toast from 'react-hot-toast';
 
 export default function Post() {
   const { id } = useParams();
@@ -23,6 +25,8 @@ export default function Post() {
   const [isLoading] = useState(true);
   const postDate = formatDate(post?.created_at);
   const relatedPosts: PostProtocol[] = [];
+  const token = localStorage.getItem('token');
+  const decodedToken = tokenDecoder(token);
 
   useEffect(() => {
     const getPost = async () => {
@@ -45,6 +49,21 @@ export default function Post() {
 
     getPosts();
   }, []);
+
+  const likePost = async () => {
+    axios.defaults.headers.Authorization = `Bearer ${token}`;
+
+    await axios
+      .put(`post/like/${post?.id}/${decodedToken?.id}`)
+      .then((response) => {
+        console.log(response);
+        toast.success('Você curtiu a postagem.');
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data);
+      });
+  };
 
   posts.map((post) =>
     relatedPosts.length < 3 ? relatedPosts.push(post) : relatedPosts,
@@ -81,11 +100,14 @@ export default function Post() {
               </div>
               <div className="flex flex-row gap-16 items-center justify-center">
                 <div className="flex flex-col items-center gap-2">
-                  <Heart
-                    size={30}
-                    cursor="pointer"
-                    className="hover:text-red-400 visited:text-red-400"
-                  />
+                  <button onClick={likePost}>
+                    <Heart
+                      size={30}
+                      cursor="pointer"
+                      className="hover:text-red-400 visited:text-red-400"
+                    />
+                  </button>
+
                   <p>{post.likes}</p>
                 </div>
                 <div className="flex flex-col items-center gap-2">
