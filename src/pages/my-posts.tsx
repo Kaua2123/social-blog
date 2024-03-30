@@ -118,7 +118,7 @@ export default function MyPosts() {
                   <input
                     onChange={(e) => setTags(e.target.value)}
                     className="pr-3 pl-12 rounded-md w-full placeholder-gray-500 text-black border mt-3 border-gray-400 focus:border-blue-400 transition-all outline-none p-2"
-                    type="email"
+                    type="text"
                     name=""
                     id=""
                     placeholder="Tags do post"
