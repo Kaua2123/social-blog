@@ -39,7 +39,21 @@ export default function ModalUpdate({
 
     const imgURL = URL.createObjectURL(image[0]);
     setImageURL(imgURL);
-    console.log('dados da imagem: ', image, 'url da imagem: ', imgURL);
+
+    const formData = new FormData();
+    formData.append('image', image[0]);
+
+    try {
+      axios.post(`image/post/${post_id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      toast.success('Imagem adicionada');
+    } catch (error) {
+      toast.error('Erro ao adicionar imagem');
+    }
   };
 
   return (
