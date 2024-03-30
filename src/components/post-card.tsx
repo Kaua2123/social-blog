@@ -9,6 +9,7 @@ import { addDotsOnLongTitle } from '../utils/addDotsOnLongTitle';
 import { scrollToTop } from '../utils/scrollToTop';
 import { useEffect, useState } from 'react';
 import { tokenDecoder } from '../utils/tokenDecoder';
+import ModalDelete from './modal-delete';
 
 export type PostCardProps = {
   post: PostProtocol;
@@ -18,6 +19,7 @@ export default function PostCard({ post }: PostCardProps) {
   const content = addDotsOnLongContent(post);
   const title = addDotsOnLongTitle(post);
   const [isMyPost, setIsMyPost] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const token = localStorage.getItem('token');
   const decodedToken = tokenDecoder(token);
@@ -37,7 +39,10 @@ export default function PostCard({ post }: PostCardProps) {
             <button className="absolute p-2 m-2 transition-all hover:opacity-85 right-0 flex items-center justify-center bg-blue-400 rounded-full">
               <RiPencilFill color="white" />
             </button>
-            <button className="absolute p-2 m-2 transition-all hover:opacity-85 bottom-0 right-0  flex items-center justify-center bg-blue-400 rounded-full">
+            <button
+              onClick={() => setIsDeleting(!isDeleting)}
+              className="absolute p-2 m-2 transition-all hover:opacity-85 bottom-0 right-0  flex items-center justify-center bg-blue-400 rounded-full"
+            >
               <Trash color="white" size={17} />
             </button>
           </>
@@ -73,6 +78,13 @@ export default function PostCard({ post }: PostCardProps) {
           </button>
         </div>
       </div>
+      {isDeleting && (
+        <ModalDelete
+          isDeleting={isDeleting}
+          setIsDeleting={setIsDeleting}
+          post_id={post.id}
+        />
+      )}
     </>
   );
 }
