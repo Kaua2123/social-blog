@@ -102,32 +102,34 @@ export default function Comments({ comments, post_id }: CommentsProps) {
                   </p>
                 </div>
               </div>
-              <div className="flex flex-col items-center">
-                <button
-                  className="hover:text-blue-400"
-                  onClick={() => {
-                    toggleEllipsis(index);
-                  }}
-                >
-                  <EllipsisVertical />
-                </button>
+              {comment.user_id === user_id && (
+                <div className="flex flex-col items-center">
+                  <button
+                    className="hover:text-blue-400"
+                    onClick={() => {
+                      toggleEllipsis(index);
+                    }}
+                  >
+                    <EllipsisVertical />
+                  </button>
 
-                {activeIndex === index && (
-                  <div className="z-10 mt-8 gap-2 items-center border rounded-lg p-2 justify-center flex flex-col absolute">
-                    <button
-                      type="submit"
-                      className="hover:text-blue-400 flex items-center gap-3 font-poppins hover:opacity-85 mt-4 w-24 font-medium rounded-md  p-2"
-                    >
-                      <RiPencilFill />
-                      Editar
-                    </button>
-                    <button className="hover:text-blue-400 flex items-center gap-3 font-poppins hover:opacity-85 w-24 font-medium rounded-md  p-2">
-                      <Trash />
-                      Excluir
-                    </button>
-                  </div>
-                )}
-              </div>
+                  {activeIndex === index && (
+                    <div className="z-10 mt-8 gap-2 items-center border rounded-lg p-2 justify-center flex flex-col absolute">
+                      <button
+                        type="submit"
+                        className="hover:text-blue-400 flex items-center gap-3 font-poppins hover:opacity-85 mt-4 w-24 font-medium rounded-md  p-2"
+                      >
+                        <RiPencilFill />
+                        Editar
+                      </button>
+                      <button className="hover:text-blue-400 flex items-center gap-3 font-poppins hover:opacity-85 w-24 font-medium rounded-md  p-2">
+                        <Trash />
+                        Excluir
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="flex flex-col justify-center gap-5">
