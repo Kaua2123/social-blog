@@ -1,4 +1,11 @@
-import { Heart, MessageCircle, SendHorizonal, User } from 'lucide-react';
+import {
+  EllipsisVertical,
+  Heart,
+  MessageCircle,
+  SendHorizonal,
+  Trash,
+  User,
+} from 'lucide-react';
 import { CommentsProtocol } from '../interfaces/comments-protocol';
 import { formatDate } from '../utils/formatDate';
 import axios from '../services/axios';
@@ -6,6 +13,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { tokenDecoder } from '../utils/tokenDecoder';
 import { Spinner } from '@chakra-ui/spinner';
+import { RiPencilFill } from 'react-icons/ri';
 
 export type CommentsProps = {
   comments: CommentsProtocol[];
@@ -15,15 +23,19 @@ export type CommentsProps = {
 export default function Comments({ comments, post_id }: CommentsProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState('');
-  comments.map((comment) => formatDate(comment.createdAt));
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
   const token = localStorage.getItem('token');
   const user_id = tokenDecoder(token)?.id;
+
+  const toggleEllipsis = (index: number) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
 
   const postComments = async () => {
     setIsLoading(true);
     axios.defaults.headers.Authorization = `Bearer ${token}`;
 
-    if (!content) {
+    if (!content || content.length === 0) {
       setIsLoading(false);
       return toast.error('Você não pode enviar um comentario vazio.');
     }
@@ -71,7 +83,7 @@ export default function Comments({ comments, post_id }: CommentsProps) {
       </div>
 
       {comments &&
-        comments.map((comment) => (
+        comments.map((comment, index) => (
           <div
             key={comment.id}
             className="m-28 rounded-md p-6 flex flex-col flex-wrap gap-8"
@@ -90,14 +102,35 @@ export default function Comments({ comments, post_id }: CommentsProps) {
                   </p>
                 </div>
               </div>
-              <div>
-                <button className=" font-poppins hover:opacity-85 w-32 h-10 font-medium text-white  transition-all bg-blue-400 rounded-md">
-                  Responder
+              <div className="flex flex-col items-center">
+                <button
+                  className="hover:text-blue-400"
+                  onClick={() => {
+                    toggleEllipsis(index);
+                  }}
+                >
+                  <EllipsisVertical />
                 </button>
+
+                {activeIndex === index && (
+                  <div className="z-10 mt-8 gap-2 items-center border rounded-lg p-2 justify-center flex flex-col absolute">
+                    <button
+                      type="submit"
+                      className="hover:text-blue-400 flex items-center gap-3 font-poppins hover:opacity-85 mt-4 w-24 font-medium rounded-md  p-2"
+                    >
+                      <RiPencilFill />
+                      Editar
+                    </button>
+                    <button className="hover:text-blue-400 flex items-center gap-3 font-poppins hover:opacity-85 w-24 font-medium rounded-md  p-2">
+                      <Trash />
+                      Excluir
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col justify-center gap-5">
               <div className="">{comment.content}</div>
               <div className="flex flex-row gap-5">
                 <Heart
@@ -110,10 +143,14 @@ export default function Comments({ comments, post_id }: CommentsProps) {
                   className="hover:text-gray-400 visited:text-gray-400"
                 />
                 <p>0</p>
+                <button className=" font-poppins hover:opacity-65">
+                  Responder
+                </button>
               </div>
             </div>
           </div>
         ))}
+
       {comments.length == 0 && (
         <h1 className="text-blue-400 font-poppins text-3xl mb-20 flex items-center justify-center">
           Parece que não há comentários neste post.
