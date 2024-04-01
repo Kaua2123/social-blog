@@ -22,13 +22,22 @@ export type CommentsProps = {
 
 export default function Comments({ comments, post_id }: CommentsProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingDeleting, setIsLoadingDeleting] = useState(false);
+  const [isLoadingUpdating, setIsLoadingUpdating] = useState(false);
   const [content, setContent] = useState('');
-  const [activeIndex, setActiveIndex] = useState<number | null>(0);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeIndexUpdating, setActiveIndexUpdating] = useState<number | null>(
+    null,
+  );
   const token = localStorage.getItem('token');
   const user_id = tokenDecoder(token)?.id;
 
   const toggleEllipsis = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
+  };
+
+  const toggleInputUpdating = (index: number) => {
+    setActiveIndexUpdating(activeIndexUpdating === index ? null : index);
   };
 
   const postComments = async () => {
@@ -51,6 +60,47 @@ export default function Comments({ comments, post_id }: CommentsProps) {
         console.log(error);
         setIsLoading(false);
         toast.error(error.response.data);
+      });
+  };
+
+  const updateComment = async (id: number) => {
+    setIsLoadingUpdating(false);
+    axios.defaults.headers.Authorization = `Bearer ${token}`;
+
+    if (!content || content.length === 0) {
+      setIsLoadingUpdating(false);
+      return toast.error('Você não pode enviar um comentario vazio.');
+    }
+
+    await axios
+      .put(`comment/update/${id}`, { content, user_id, post_id })
+      .then((response) => {
+        console.log(response);
+        setIsLoadingUpdating(false);
+        setActiveIndexUpdating(null);
+        toast.success('Comentário atualizado.');
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        toast.error('Erro ao tentar atualizar comentário.');
+      });
+  };
+
+  const deleteComment = async (id: number) => {
+    setIsLoadingDeleting(true);
+    axios.defaults.headers.Authorization = `Bearer ${token}`;
+
+    await axios
+      .delete(`comment/delete/${id}`)
+      .then(() => {
+        setIsLoadingDeleting(false);
+        setActiveIndex(null);
+        toast.success('Comentário excluído com sucesso');
+      })
+      .catch(() => {
+        setIsLoadingDeleting(false);
+        toast.error('Erro ao excluir comentário');
       });
   };
 
@@ -117,14 +167,24 @@ export default function Comments({ comments, post_id }: CommentsProps) {
                     <div className="z-10 mt-8 gap-2 items-center border rounded-lg p-2 justify-center flex flex-col absolute">
                       <button
                         type="submit"
+                        onClick={() => toggleInputUpdating(index)}
                         className="hover:text-blue-400 flex items-center gap-3 font-poppins hover:opacity-85 mt-4 w-24 font-medium rounded-md  p-2"
                       >
                         <RiPencilFill />
                         Editar
                       </button>
-                      <button className="hover:text-blue-400 flex items-center gap-3 font-poppins hover:opacity-85 w-24 font-medium rounded-md  p-2">
-                        <Trash />
-                        Excluir
+                      <button
+                        onClick={() => deleteComment(comment.id)}
+                        className="hover:text-blue-400 flex justify-center items-center gap-3 font-poppins hover:opacity-85 w-24 font-medium rounded-md  p-2"
+                      >
+                        {isLoadingDeleting ? (
+                          <Spinner boxSize="14px" color="black" />
+                        ) : (
+                          <>
+                            <Trash />
+                            <p>Excluir</p>
+                          </>
+                        )}
                       </button>
                     </div>
                   )}
@@ -133,22 +193,46 @@ export default function Comments({ comments, post_id }: CommentsProps) {
             </div>
 
             <div className="flex flex-col justify-center gap-5">
-              <div className="">{comment.content}</div>
-              <div className="flex flex-row gap-5">
-                <Heart
-                  cursor="pointer"
-                  className="hover:text-red-400 visited:text-red-400"
-                />
-                <p>0</p>
-                <MessageCircle
-                  cursor="pointer"
-                  className="hover:text-gray-400 visited:text-gray-400"
-                />
-                <p>0</p>
-                <button className=" font-poppins hover:opacity-65">
-                  Responder
-                </button>
-              </div>
+              {activeIndexUpdating === index ? (
+                <div className="flex gap-8 items-center">
+                  <input
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder="Digite algo..."
+                    className="rounded-md
+                  pl-10 p-2 w-10/12 outline-none
+                  flex items-center gap-20 border border-black"
+                  />
+                  <button
+                    onClick={() => updateComment(comment.id)}
+                    className="flex items-center justify-center bg-blue-400 text-white p-3 rounded-full hover:opacity-85"
+                  >
+                    {isLoadingUpdating ? (
+                      <Spinner boxSize="25px" color="white" />
+                    ) : (
+                      <SendHorizonal />
+                    )}
+                  </button>
+                </div>
+              ) : (
+                <div className="">{comment.content}</div>
+              )}
+              {activeIndexUpdating === null && (
+                <div className="flex flex-row gap-5">
+                  <Heart
+                    cursor="pointer"
+                    className="hover:text-red-400 visited:text-red-400"
+                  />
+                  <p>0</p>
+                  <MessageCircle
+                    cursor="pointer"
+                    className="hover:text-gray-400 visited:text-gray-400"
+                  />
+                  <p>0</p>
+                  <button className=" font-poppins hover:opacity-65">
+                    Responder
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         ))}
