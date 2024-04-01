@@ -5,6 +5,7 @@ import axios from '../services/axios';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { tokenDecoder } from '../utils/tokenDecoder';
+import { Spinner } from '@chakra-ui/spinner';
 
 export type CommentsProps = {
   comments: CommentsProtocol[];
@@ -12,22 +13,31 @@ export type CommentsProps = {
 };
 
 export default function Comments({ comments, post_id }: CommentsProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState('');
-  const commentDate = comments.map((comment) => formatDate(comment.createdAt));
+  comments.map((comment) => formatDate(comment.createdAt));
   const token = localStorage.getItem('token');
   const user_id = tokenDecoder(token)?.id;
 
   const postComments = async () => {
+    setIsLoading(true);
     axios.defaults.headers.Authorization = `Bearer ${token}`;
+
+    if (!content) {
+      setIsLoading(false);
+      return toast.error('Você não pode enviar um comentario vazio.');
+    }
 
     await axios
       .post('comment/store', { content, user_id, post_id })
       .then((response) => {
         console.log(response);
+        setIsLoading(false);
         toast.success('Comentário enviado.');
       })
       .catch((error) => {
         console.log(error);
+        setIsLoading(false);
         toast.error(error.response.data);
       });
   };
@@ -49,9 +59,13 @@ export default function Comments({ comments, post_id }: CommentsProps) {
           />
           <button
             onClick={postComments}
-            className="bg-blue-400 text-white p-3 rounded-full hover:opacity-85"
+            className="flex items-center justify-center bg-blue-400 text-white p-3 rounded-full hover:opacity-85"
           >
-            <SendHorizonal />
+            {isLoading ? (
+              <Spinner boxSize="25px" color="white" />
+            ) : (
+              <SendHorizonal />
+            )}
           </button>
         </div>
       </div>
@@ -71,7 +85,9 @@ export default function Comments({ comments, post_id }: CommentsProps) {
                   <p className="text-blue-400 font-poppins">
                     {comment.User.username}
                   </p>
-                  <p className="text-gray-500">{commentDate}</p>
+                  <p className="text-gray-500">
+                    {formatDate(comment.createdAt)}
+                  </p>
                 </div>
               </div>
               <div>
