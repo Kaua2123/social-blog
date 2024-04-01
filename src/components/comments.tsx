@@ -216,23 +216,21 @@ export default function Comments({ comments, post_id }: CommentsProps) {
               ) : (
                 <div className="">{comment.content}</div>
               )}
-              {activeIndexUpdating === null && (
-                <div className="flex flex-row gap-5">
-                  <Heart
-                    cursor="pointer"
-                    className="hover:text-red-400 visited:text-red-400"
-                  />
-                  <p>0</p>
-                  <MessageCircle
-                    cursor="pointer"
-                    className="hover:text-gray-400 visited:text-gray-400"
-                  />
-                  <p>0</p>
-                  <button className=" font-poppins hover:opacity-65">
-                    Responder
-                  </button>
-                </div>
-              )}
+              <div className="flex flex-row gap-5">
+                <Heart
+                  cursor="pointer"
+                  className="hover:text-red-400 visited:text-red-400"
+                />
+                <p>0</p>
+                <MessageCircle
+                  cursor="pointer"
+                  className="hover:text-gray-400 visited:text-gray-400"
+                />
+                <p>0</p>
+                <button className=" font-poppins hover:opacity-65">
+                  Responder
+                </button>
+              </div>
             </div>
           </div>
         ))}
