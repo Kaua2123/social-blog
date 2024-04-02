@@ -12,7 +12,7 @@ import { PostProtocol } from '../interfaces/post-protocol';
 import Navbar from '../components/navbar';
 import PostCard from '../components/post-card';
 import Footer from '../components/footer';
-import Comments from '../components/comments';
+import Comments from '../components/comments/comments';
 import Tags from '../components/tags';
 import Loader from '../components/loader';
 import { tokenDecoder } from '../utils/tokenDecoder';

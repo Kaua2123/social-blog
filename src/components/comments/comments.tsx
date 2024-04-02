@@ -2,18 +2,20 @@ import {
   EllipsisVertical,
   Heart,
   MessageCircle,
-  SendHorizonal,
   Trash,
   User,
 } from 'lucide-react';
-import { CommentsProtocol } from '../interfaces/comments-protocol';
-import { formatDate } from '../utils/formatDate';
-import axios from '../services/axios';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { tokenDecoder } from '../utils/tokenDecoder';
 import { Spinner } from '@chakra-ui/spinner';
 import { RiPencilFill } from 'react-icons/ri';
+
+import PostComment from './post-comment';
+import UpdateComment from './update-comment';
+import axios from '../../services/axios';
+import { formatDate } from '../../utils/formatDate';
+import { CommentsProtocol } from '../../interfaces/comments-protocol';
+import { tokenDecoder } from '../../utils/tokenDecoder';
 
 export type CommentsProps = {
   comments: CommentsProtocol[];
@@ -21,14 +23,12 @@ export type CommentsProps = {
 };
 
 export default function Comments({ comments, post_id }: CommentsProps) {
-  const [isLoading, setIsLoading] = useState(false);
   const [isLoadingDeleting, setIsLoadingDeleting] = useState(false);
-  const [isLoadingUpdating, setIsLoadingUpdating] = useState(false);
-  const [content, setContent] = useState('');
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [activeIndexUpdating, setActiveIndexUpdating] = useState<number | null>(
     null,
   );
+
   const token = localStorage.getItem('token');
   const user_id = tokenDecoder(token)?.id;
 
@@ -38,53 +38,6 @@ export default function Comments({ comments, post_id }: CommentsProps) {
 
   const toggleInputUpdating = (index: number) => {
     setActiveIndexUpdating(activeIndexUpdating === index ? null : index);
-  };
-
-  const postComments = async () => {
-    setIsLoading(true);
-    axios.defaults.headers.Authorization = `Bearer ${token}`;
-
-    if (!content || content.length === 0) {
-      setIsLoading(false);
-      return toast.error('Você não pode enviar um comentario vazio.');
-    }
-
-    await axios
-      .post('comment/store', { content, user_id, post_id })
-      .then((response) => {
-        console.log(response);
-        setIsLoading(false);
-        toast.success('Comentário enviado.');
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-        toast.error(error.response.data);
-      });
-  };
-
-  const updateComment = async (id: number) => {
-    setIsLoadingUpdating(false);
-    axios.defaults.headers.Authorization = `Bearer ${token}`;
-
-    if (!content || content.length === 0) {
-      setIsLoadingUpdating(false);
-      return toast.error('Você não pode enviar um comentario vazio.');
-    }
-
-    await axios
-      .put(`comment/update/${id}`, { content, user_id, post_id })
-      .then((response) => {
-        console.log(response);
-        setIsLoadingUpdating(false);
-        setActiveIndexUpdating(null);
-        toast.success('Comentário atualizado.');
-      })
-      .catch((error) => {
-        console.log(error);
-        setIsLoading(false);
-        toast.error('Erro ao tentar atualizar comentário.');
-      });
   };
 
   const deleteComment = async (id: number) => {
@@ -106,30 +59,11 @@ export default function Comments({ comments, post_id }: CommentsProps) {
 
   return (
     <>
-      <div className="m-28 flex flex-col gap-8">
+      <div className="m-28 flex flex-col gap-12">
         <h1 className="text-3xl font-bold text-blue-400 font-poppins">
           Comentários
         </h1>
-        <div className="flex gap-8 items-center">
-          <User size={60} />
-          <input
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Digite algo..."
-            className="rounded-md
-            pl-10 p-2 w-10/12 outline-none
-            flex items-center gap-20 border border-black"
-          />
-          <button
-            onClick={postComments}
-            className="flex items-center justify-center bg-blue-400 text-white p-3 rounded-full hover:opacity-85"
-          >
-            {isLoading ? (
-              <Spinner boxSize="25px" color="white" />
-            ) : (
-              <SendHorizonal />
-            )}
-          </button>
-        </div>
+        <PostComment post_id={post_id} />
       </div>
 
       {comments &&
@@ -192,45 +126,28 @@ export default function Comments({ comments, post_id }: CommentsProps) {
               )}
             </div>
 
-            <div className="flex flex-col justify-center gap-5">
-              {activeIndexUpdating === index ? (
-                <div className="flex gap-8 items-center">
-                  <input
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder="Digite algo..."
-                    className="rounded-md
-                  pl-10 p-2 w-10/12 outline-none
-                  flex items-center gap-20 border border-black"
-                  />
-                  <button
-                    onClick={() => updateComment(comment.id)}
-                    className="flex items-center justify-center bg-blue-400 text-white p-3 rounded-full hover:opacity-85"
-                  >
-                    {isLoadingUpdating ? (
-                      <Spinner boxSize="25px" color="white" />
-                    ) : (
-                      <SendHorizonal />
-                    )}
-                  </button>
-                </div>
-              ) : (
-                <div className="">{comment.content}</div>
-              )}
-              <div className="flex flex-row gap-5">
-                <Heart
-                  cursor="pointer"
-                  className="hover:text-red-400 visited:text-red-400"
-                />
-                <p>0</p>
-                <MessageCircle
-                  cursor="pointer"
-                  className="hover:text-gray-400 visited:text-gray-400"
-                />
-                <p>0</p>
-                <button className=" font-poppins hover:opacity-65">
-                  Responder
-                </button>
-              </div>
+            <UpdateComment
+              comment={comment}
+              index={index}
+              post_id={post_id}
+              activeIndexUpdating={activeIndexUpdating}
+              setActiveIndexUpdating={setActiveIndexUpdating}
+            />
+
+            <div className="flex flex-row gap-5">
+              <Heart
+                cursor="pointer"
+                className="hover:text-red-400 visited:text-red-400"
+              />
+              <p>0</p>
+              <MessageCircle
+                cursor="pointer"
+                className="hover:text-gray-400 visited:text-gray-400"
+              />
+              <p>0</p>
+              <button className=" font-poppins hover:opacity-65">
+                Responder
+              </button>
             </div>
           </div>
         ))}
