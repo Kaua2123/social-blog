@@ -125,8 +125,8 @@ export default function Post() {
                     cursor="pointer"
                     className="hover:text-gray-400 visited:text-gray-400"
                   />
-                  {/* valor abaixo ficticio */}
-                  <p>2</p>
+
+                  <p>{post.Comments.length}</p>
                 </div>
               </div>
             </div>
@@ -135,7 +135,7 @@ export default function Post() {
             <div>
               {post.User && post.User.image ? (
                 <img
-                  className="rounded-2xl shadow-lg w-36"
+                  className="rounded-2xl shadow-lg w-36 h-36"
                   src={post.User.image_url}
                   alt=""
                 />
