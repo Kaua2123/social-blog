@@ -23,8 +23,12 @@ export type CommentsProps = {
 };
 
 export default function Comments({ comments, post_id }: CommentsProps) {
+  const [isAnswering, setIsAnswering] = useState(false);
   const [isLoadingDeleting, setIsLoadingDeleting] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeIndexOfAnswer, setActiveIndexOfAnswer] = useState<number | null>(
+    null,
+  );
   const [activeIndexUpdating, setActiveIndexUpdating] = useState<number | null>(
     null,
   );
@@ -34,6 +38,10 @@ export default function Comments({ comments, post_id }: CommentsProps) {
 
   const toggleEllipsis = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
+  };
+
+  const toggleAnswer = (index: number) => {
+    setActiveIndexOfAnswer(activeIndexOfAnswer === index ? null : index);
   };
 
   const toggleInputUpdating = (index: number) => {
@@ -57,6 +65,7 @@ export default function Comments({ comments, post_id }: CommentsProps) {
       });
   };
 
+  console.log(comments);
   return (
     <>
       <div className="m-28 flex flex-col gap-12">
@@ -145,10 +154,25 @@ export default function Comments({ comments, post_id }: CommentsProps) {
                 className="hover:text-gray-400 visited:text-gray-400"
               />
               <p>0</p>
-              <button className=" font-poppins hover:opacity-65">
+              <button
+                onClick={() => {
+                  toggleAnswer(index);
+                  setIsAnswering(!isAnswering);
+                }}
+                className={
+                  isAnswering && activeIndexOfAnswer === index
+                    ? 'font-poppins hover:opacity-65 text-blue-400'
+                    : 'font-poppins hover:opacity-65'
+                }
+              >
                 Responder
               </button>
             </div>
+            {isAnswering && activeIndexOfAnswer === index && (
+              <h1>
+                <PostComment post_id={post_id} />
+              </h1>
+            )}
           </div>
         ))}
 

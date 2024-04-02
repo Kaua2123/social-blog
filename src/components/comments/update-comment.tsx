@@ -24,7 +24,6 @@ export default function UpdateComment({
 }: UpdateCommentProps) {
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  console.log(activeIndexUpdating, 'aqui do componente update');
 
   const token = localStorage.getItem('token');
   const user_id = tokenDecoder(token)?.id;

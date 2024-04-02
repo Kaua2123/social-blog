@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../components/loader';
 import { UserProtocol } from '../interfaces/user-protocol';
 
+import noImg from '../imgs/no-img.png';
+
 export default function Profile() {
   const [user, setUser] = useState<UserProtocol>();
   const [name, setName] = useState('');
@@ -15,6 +17,7 @@ export default function Profile() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [imageURL, setImageURL] = useState('');
   const token = localStorage.getItem('token');
   const decodedToken = tokenDecoder(token);
   const navigate = useNavigate();
@@ -36,8 +39,36 @@ export default function Profile() {
     getUser();
   });
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    axios.defaults.headers.Authorization = `Bearer ${token}`;
+
+    const image = e.target.files;
+
+    if (!image) return;
+
+    const imgURL = URL.createObjectURL(image[0]);
+    setImageURL(imgURL);
+
+    console.log(image, image[0]);
+    const formData = new FormData();
+    formData.append('image', image[0]);
+
+    try {
+      axios.post(`image/user/${decodedToken?.id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      toast.success('Imagem adicionada');
+    } catch (error) {
+      toast.error('Erro ao adicionar imagem');
+    }
+  };
+
   const updateUser = async () => {
-    console.log(email, password);
+    axios.defaults.headers.Authorization = `Bearer ${token}`;
+
     if (!email || !password)
       return toast.error(
         'Você deve pelo menos confirmar o email e a senha, digitando os mesmos novamente.',
@@ -71,8 +102,20 @@ export default function Profile() {
                 <h1 className="text-blue-400 font-poppins font-medium text-5xl">
                   Meu Perfil
                 </h1>
-                <div className="rounded-full p-8 border border-black">
-                  <User className="" size={100} />
+                <div className="rounded-full flex items-center justify-center p-4 w-40 h-40 border border-black">
+                  {user?.image_url ? (
+                    <img
+                      src={imageURL ? imageURL : user.image_url}
+                      alt=""
+                      className="w-full h-full rounded-full"
+                    />
+                  ) : (
+                    <img
+                      src={imageURL ? imageURL : noImg}
+                      alt=""
+                      className="w-full h-full rounded-full"
+                    />
+                  )}
                 </div>
                 <button className="font-poppins hover:opacity-85 w-56 h-10 font-medium text-white  transition-all bg-blue-400 rounded-md">
                   <label
@@ -80,7 +123,12 @@ export default function Profile() {
                     className="cursor-pointer flex flex-row items-center justify-center  gap-5 "
                   >
                     Alterar foto de perfil
-                    <input id="image-input" type="file" className="hidden" />
+                    <input
+                      id="image-input"
+                      type="file"
+                      className="hidden"
+                      onChange={(e) => handleChange(e)}
+                    />
                     <Camera size={22} />
                   </label>
                 </button>
