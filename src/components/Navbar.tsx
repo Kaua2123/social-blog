@@ -4,9 +4,29 @@ import logo from '../imgs/logo.png';
 
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
+import axios from '../services/axios';
+import { useEffect, useState } from 'react';
+import { tokenDecoder } from '../utils/tokenDecoder';
 
 export default function Navbar() {
   const token = localStorage.getItem('token');
+  const decodedToken = tokenDecoder(token);
+  const [userPhoto, setUserPhoto] = useState('');
+
+  useEffect(() => {
+    const getUsersPhoto = async () => {
+      await axios
+        .get(`/user/${decodedToken?.id}`)
+        .then((response) => {
+          setUserPhoto(response.data.image_url);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    getUsersPhoto();
+  });
 
   return (
     <div className="sticky flex row justify-between items-center  p-1 shadow-sm">
@@ -35,7 +55,11 @@ export default function Navbar() {
           <Bell size={22} cursor={'pointer'} />
 
           <Link to={'/profile'} className="border-black border rounded-full">
-            <User size={40} />
+            {userPhoto ? (
+              <img src={userPhoto} alt="" className="w-12 h-12 rounded-full" />
+            ) : (
+              <User size={40} />
+            )}
           </Link>
         </div>
       ) : (

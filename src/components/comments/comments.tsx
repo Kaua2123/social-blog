@@ -65,7 +65,6 @@ export default function Comments({ comments, post_id }: CommentsProps) {
       });
   };
 
-  console.log(comments);
   return (
     <>
       <div className="m-28 flex flex-col gap-12">
@@ -84,11 +83,19 @@ export default function Comments({ comments, post_id }: CommentsProps) {
             <div className="flex justify-between">
               <div className="items-center flex  gap-8 ">
                 <div>
-                  <User size={50} />
+                  {comment.User.image ? (
+                    <img
+                      src={comment.User.image_url}
+                      className="w-16 h-16 rounded-full"
+                      alt=""
+                    />
+                  ) : (
+                    <User size={50} />
+                  )}
                 </div>
                 <div className="flex flex-col gap-1">
                   <p className="text-blue-400 font-poppins">
-                    {comment.User.username}
+                    {comment.User.username ? comment.User.username : 'Sem nome'}
                   </p>
                   <p className="text-gray-500">
                     {formatDate(comment.createdAt)}
