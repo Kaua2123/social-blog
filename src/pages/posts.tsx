@@ -35,6 +35,10 @@ export default function Posts() {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const filteredCurrentPosts = filteredPosts.slice(
+    indexOfFirstPost,
+    indexOfLastPost,
+  );
 
   for (let i = 1; i <= Math.ceil(posts.length / postsPerPage); i++) {
     numbersOfPage.push(i);
@@ -90,7 +94,7 @@ export default function Posts() {
       <div className="grid grid-cols-3 m-20 gap-y-10">
         {posts && posts.length > 0 ? (
           isFiltering ? (
-            filteredPosts.map((post, index) => (
+            filteredCurrentPosts.map((post, index) => (
               <PostCard key={index} post={post} />
             ))
           ) : (
