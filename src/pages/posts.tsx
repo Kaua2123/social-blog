@@ -1,16 +1,20 @@
 import { ArrowRight, ArrowLeft, Dot, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import 'react-loading-skeleton/dist/skeleton.css';
 
+import { PostProtocol } from '../interfaces/post-protocol';
+import { filterPosts } from '../utils/filterPosts';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import PostCard from '../components/post-card';
 import axios from '../services/axios';
-import { PostProtocol } from '../interfaces/post-protocol';
 import CardSkeleton from '../components/card-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 
 export default function Posts() {
   const [posts, setPosts] = useState<PostProtocol[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<PostProtocol[]>([]);
+  const [isFiltering, setIsFiltering] = useState(false);
+  const [query, setQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -53,12 +57,17 @@ export default function Posts() {
           <h1 className=" text-xl text-white">Em busca de alguma postagem?</h1>
           <div className="flex flex-row gap-6  items-center justify-center">
             <input
+              onChange={(e) => setQuery(e.target.value)}
               className="pr-3 pl-6 rounded-md placeholder-gray-500 text-black border border-gray-400 focus:border-blue-400 transition-all outline-none p-2 "
               type="text"
               placeholder="Nome do post"
             />
             <button
               type="submit"
+              onClick={() => {
+                console.log(filterPosts(query, posts, setFilteredPosts));
+                query.length > 0 ? setIsFiltering(true) : setIsFiltering(false);
+              }}
               className="font-poppins flex items-center gap-4  w-32 p-2 font-medium transition-all bg-white rounded-md"
             >
               <Search size={20} />
@@ -70,9 +79,15 @@ export default function Posts() {
 
       <div className="grid grid-cols-3 m-20 gap-y-10">
         {posts && posts.length > 0 ? (
-          currentPosts.map((post, index) => (
-            <PostCard key={index} post={post} />
-          ))
+          isFiltering ? (
+            filteredPosts.map((post, index) => (
+              <PostCard key={index} post={post} />
+            ))
+          ) : (
+            currentPosts.map((post, index) => (
+              <PostCard key={index} post={post} />
+            ))
+          )
         ) : (
           <>
             {Array.from({ length: 9 }).map((_, index) => (
