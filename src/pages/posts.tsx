@@ -64,11 +64,6 @@ export default function Posts() {
           <div className="flex flex-row gap-6  items-center justify-center">
             <input
               onChange={(e) => setQuery(e.target.value)}
-              onKeyUp={(e) => {
-                e.key === 'Enter' &&
-                  filterPosts(query, posts, setFilteredPosts, setIsLoading);
-                setIsFiltering(true);
-              }}
               className="pr-3 pl-6 rounded-md placeholder-gray-500 text-black border border-gray-400 focus:border-blue-400 transition-all outline-none p-2 "
               type="text"
               placeholder="Nome do post"

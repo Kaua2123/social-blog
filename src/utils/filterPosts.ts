@@ -1,4 +1,3 @@
-import toast from 'react-hot-toast';
 import { PostProtocol } from '../interfaces/post-protocol';
 
 export const filterPosts = (
@@ -11,7 +10,6 @@ export const filterPosts = (
 
   if (query.length === 0) {
     setIsLoading(false);
-    return toast.error('Digite algo para buscar');
   }
 
   const filteredPosts = posts.filter((post) => {

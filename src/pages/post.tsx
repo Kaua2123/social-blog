@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Calendar, Heart, MessageCircle, Share, User } from 'lucide-react';
+import { Calendar, Heart, MessageCircle, ShareIcon, User } from 'lucide-react';
 
 import axios from '../services/axios';
 import noImg from '../imgs/no-img.png';
@@ -48,6 +48,17 @@ export default function Post() {
 
     getPosts();
   }, []);
+
+  const sharePost = () => {
+    navigator.clipboard
+      .writeText(`Veja meu post em http://localhost:5173/${id}`)
+      .then(() => {
+        toast.success('Link do Post copiado para compartilhamento');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const likePost = async () => {
     axios.defaults.headers.Authorization = `Bearer ${token}`;
@@ -110,10 +121,11 @@ export default function Post() {
                   <p>{post.likes}</p>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                  <Share
+                  <ShareIcon
                     size={30}
                     cursor="pointer"
                     className="hover:text-blue-400 visited:text-blue-400"
+                    onClick={() => sharePost()}
                   />
                   {/* valor abaixo ficticio */}
                   <p>2</p>
