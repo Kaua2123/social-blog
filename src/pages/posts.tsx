@@ -9,11 +9,13 @@ import Footer from '../components/footer';
 import PostCard from '../components/post-card';
 import axios from '../services/axios';
 import CardSkeleton from '../components/card-skeleton';
+import { Spinner } from '@chakra-ui/spinner';
 
 export default function Posts() {
   const [posts, setPosts] = useState<PostProtocol[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<PostProtocol[]>([]);
   const [isFiltering, setIsFiltering] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -65,13 +67,21 @@ export default function Posts() {
             <button
               type="submit"
               onClick={() => {
-                console.log(filterPosts(query, posts, setFilteredPosts));
+                console.log(
+                  filterPosts(query, posts, setFilteredPosts, setIsLoading),
+                );
                 query.length > 0 ? setIsFiltering(true) : setIsFiltering(false);
               }}
-              className="font-poppins flex items-center gap-4  w-32 p-2 font-medium transition-all bg-white rounded-md"
+              className="font-poppins flex items-center justify-center  gap-4  w-32 p-2 font-medium transition-all bg-white rounded-md"
             >
-              <Search size={20} />
-              Buscar
+              {isLoading ? (
+                <Spinner boxSize="22px" color="black" />
+              ) : (
+                <>
+                  <Search size={20} />
+                  Buscar
+                </>
+              )}
             </button>
           </div>
         </div>
