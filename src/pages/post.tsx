@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { Calendar, Heart, MessageCircle, Share, User } from 'lucide-react';
 
 import axios from '../services/axios';
-
 import noImg from '../imgs/no-img.png';
 import { formatDate } from '../utils/formatDate';
 
@@ -120,11 +119,7 @@ export default function Post() {
                   <p>2</p>
                 </div>
                 <div className="flex flex-col items-center gap-2">
-                  <MessageCircle
-                    size={30}
-                    cursor="pointer"
-                    className="hover:text-gray-400 visited:text-gray-400"
-                  />
+                  <MessageCircle size={30} className="hover:text-gray-400" />
 
                   <p>{post.Comments.length}</p>
                 </div>
