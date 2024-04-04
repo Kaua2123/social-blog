@@ -56,7 +56,6 @@ export default function Login() {
       .then((response) => {
         const { token } = response.data;
         localStorage.setItem('token', token);
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
         toast.success('Você entrou na conta.');
 
         setTimeout(() => {

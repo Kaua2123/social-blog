@@ -176,9 +176,9 @@ export default function Comments({ comments, post_id }: CommentsProps) {
               </button>
             </div>
             {isAnswering && activeIndexOfAnswer === index && (
-              <h1>
+              <div className="ml-6 mt-4">
                 <PostComment post_id={post_id} />
-              </h1>
+              </div>
             )}
           </div>
         ))}

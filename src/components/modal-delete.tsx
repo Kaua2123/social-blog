@@ -18,12 +18,12 @@ export default function ModalDelete({
   const deletePost = async () => {
     await axios
       .delete(`post/delete/${post_id}`)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         toast.success('Post deletado.');
       })
       .catch((error) => {
         console.log(error);
+        toast.error('Erro ao deletar post');
       });
   };
 

@@ -30,7 +30,6 @@ export default function UpdateComment({
 
   const updateComment = async (id: number) => {
     setIsLoading(true);
-    axios.defaults.headers.Authorization = `Bearer ${token}`;
 
     if (!content || content.length === 0) {
       setIsLoading(false);

@@ -22,6 +22,11 @@ export default function MyPosts() {
 
   useEffect(() => {
     const getUserPosts = async () => {
+      if (!token)
+        return toast.error(
+          'Você deve estar logado para visualizar suas próprias postagens.',
+        );
+
       axios.defaults.headers.Authorization = `Bearer ${token}`;
 
       await axios
@@ -40,6 +45,8 @@ export default function MyPosts() {
   });
 
   const createPost = async () => {
+    if (!token)
+      return toast.error('Você deve estar logado para criar postagens.');
     axios.defaults.headers.Authorization = `Bearer ${token}`;
     const user_id = decodedToken?.id;
     setIsLoading(true);
