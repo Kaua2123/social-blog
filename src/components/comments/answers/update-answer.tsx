@@ -11,18 +11,16 @@ export type UpdateAnswerProps = {
   answer: AnswersProtocol;
   index: number;
   comment_id: number;
-  activeIndexUpdatingAnswering: number | null;
-  setActiveIndexUpdatingAnswering: React.Dispatch<
-    React.SetStateAction<number | null>
-  >;
+  activeIndexUpdating: number | null;
+  setActiveIndexUpdating: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
 export default function UpdateAnswer({
   answer,
   index,
   comment_id,
-  activeIndexUpdatingAnswering,
-  setActiveIndexUpdatingAnswering,
+  activeIndexUpdating,
+  setActiveIndexUpdating,
 }: UpdateAnswerProps) {
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +41,7 @@ export default function UpdateAnswer({
       .then((response) => {
         console.log(response);
         setIsLoading(false);
-        setActiveIndexUpdatingAnswering(null);
+        setActiveIndexUpdating(null);
         toast.success('Comentário atualizado.');
       })
       .catch((error) => {
@@ -56,8 +54,8 @@ export default function UpdateAnswer({
   return (
     <>
       <div className="flex flex-col justify-center gap-5">
-        {activeIndexUpdatingAnswering === index ? (
-          <div className="flex gap-8 items-center">
+        {activeIndexUpdating === index ? (
+          <div className="flex gap-8 mt-8 mb-8 items-center">
             <input
               onChange={(e) => setContent(e.target.value)}
               placeholder="Digite algo..."
