@@ -158,7 +158,7 @@ export default function Comments({ comments, post_id }: CommentsProps) {
                 cursor="pointer"
                 className="hover:text-gray-400 visited:text-gray-400"
               />
-              <p>0</p>
+              <p>{comment.Answers.length}</p>
               <button
                 onClick={() => {
                   toggleAnswer(
@@ -178,6 +178,12 @@ export default function Comments({ comments, post_id }: CommentsProps) {
               </button>
             </div>
 
+            {isAnswering && activeIndexOfAnswer === index && (
+              <div className="ml-6 mt-4">
+                <AnswerComment comment_id={comment.id} />
+              </div>
+            )}
+
             <div className="ml-6 mt-4">
               {comment.Answers.map &&
                 comment.Answers.map((answer, answerIndex) => (
@@ -190,12 +196,6 @@ export default function Comments({ comments, post_id }: CommentsProps) {
                   />
                 ))}
             </div>
-
-            {isAnswering && activeIndexOfAnswer === index && (
-              <div className="ml-6 mt-4">
-                <AnswerComment comment_id={comment.id} />
-              </div>
-            )}
           </div>
         ))}
 

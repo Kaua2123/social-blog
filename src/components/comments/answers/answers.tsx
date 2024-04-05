@@ -1,10 +1,4 @@
-import {
-  EllipsisVertical,
-  Heart,
-  MessageCircle,
-  Trash,
-  User,
-} from 'lucide-react';
+import { EllipsisVertical, Heart, Trash, User } from 'lucide-react';
 import { AnswersProtocol } from '../../../interfaces/answers-protocol';
 import { formatDate } from '../../../utils/formatDate';
 import { useState } from 'react';
@@ -16,6 +10,7 @@ import UpdateAnswer from './update-answer';
 import { toggleEllipsis } from '../../../utils/toggleEllipsis';
 import { toggleInputUpdating } from '../../../utils/toggleUpdating';
 import { toggleAnswer } from '../../../utils/toggleAnswer';
+import AnswerComment from './answer-comment';
 
 export type AnswersProps = {
   answer: AnswersProtocol;
@@ -139,11 +134,7 @@ export default function Answers({
           className="hover:text-red-400 visited:text-red-400"
         />
         <p>0</p>
-        <MessageCircle
-          cursor="pointer"
-          className="hover:text-gray-400 visited:text-gray-400"
-        />
-        <p>0</p>
+
         <button
           onClick={() => {
             toggleAnswer(index, activeIndexOfAnswer, setActiveIndexOfAnswer);
@@ -158,6 +149,12 @@ export default function Answers({
           Responder
         </button>
       </div>
+
+      {isAnswering && activeIndexOfAnswer === index && (
+        <div className="ml-6 mt-4">
+          <AnswerComment comment_id={comment_id} />
+        </div>
+      )}
     </div>
   );
 }

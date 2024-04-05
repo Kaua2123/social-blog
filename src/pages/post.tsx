@@ -119,20 +119,22 @@ export default function Post() {
 
                   <p>{post.likes}</p>
                 </div>
-                <div className="flex flex-col items-center gap-2">
-                  <ShareIcon
-                    size={30}
-                    cursor="pointer"
-                    className="hover:text-blue-400 visited:text-blue-400"
-                    onClick={() => sharePost()}
-                  />
-                  {/* valor abaixo ficticio */}
-                  <p>2</p>
-                </div>
+
                 <div className="flex flex-col items-center gap-2">
                   <MessageCircle size={30} className="hover:text-gray-400" />
 
                   <p>{post.Comments.length}</p>
+                </div>
+
+                <div className="">
+                  <button
+                    type="submit"
+                    onClick={() => sharePost()}
+                    className=" flex gap-6 font-poppins hover:opacity-85 w-48 font-medium text-white  transition-all bg-blue-400 rounded-md p-3"
+                  >
+                    Compartilhar
+                    <ShareIcon cursor="pointer" />
+                  </button>
                 </div>
               </div>
             </div>
