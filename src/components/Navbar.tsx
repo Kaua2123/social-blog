@@ -12,12 +12,14 @@ export default function Navbar() {
   const token = localStorage.getItem('token');
   const decodedToken = tokenDecoder(token);
   const [userPhoto, setUserPhoto] = useState('');
+  const [image, setImage] = useState('');
 
   useEffect(() => {
     const getUsersPhoto = async () => {
       await axios
         .get(`/user/${decodedToken?.id}`)
         .then((response) => {
+          setImage(response.data.image);
           setUserPhoto(response.data.image_url);
         })
         .catch((error) => {
@@ -55,7 +57,7 @@ export default function Navbar() {
           <Bell size={22} cursor={'pointer'} />
 
           <Link to={'/profile'} className="border-black border rounded-full">
-            {userPhoto ? (
+            {image ? (
               <img src={userPhoto} alt="" className="w-12 h-12 rounded-full" />
             ) : (
               <User size={40} />

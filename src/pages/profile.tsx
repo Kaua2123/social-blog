@@ -91,6 +91,7 @@ export default function Profile() {
       });
   };
 
+  console.log(user?.image_url);
   return (
     <>
       {!isLoading ? (
@@ -103,7 +104,7 @@ export default function Profile() {
                   Meu Perfil
                 </h1>
                 <div className="rounded-full flex items-center justify-center p-4 w-40 h-40 border border-black">
-                  {user?.image_url ? (
+                  {user?.image ? (
                     <img
                       src={imageURL ? imageURL : user.image_url}
                       alt=""

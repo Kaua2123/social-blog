@@ -45,7 +45,6 @@ export default function Post() {
         .then((response) => setPosts(response.data))
         .catch((e) => console.log(e));
     };
-
     getPosts();
   }, []);
 
