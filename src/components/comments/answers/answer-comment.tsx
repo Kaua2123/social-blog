@@ -3,8 +3,8 @@ import { SendHorizonal, User } from 'lucide-react';
 import { Spinner } from '@chakra-ui/spinner';
 import toast from 'react-hot-toast';
 
-import { tokenDecoder } from '../../utils/tokenDecoder';
-import axios from '../../services/axios';
+import { tokenDecoder } from '../../../utils/tokenDecoder';
+import axios from '../../../services/axios';
 
 export type AnswerProps = {
   comment_id: number;

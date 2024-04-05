@@ -16,8 +16,8 @@ import axios from '../../services/axios';
 import { formatDate } from '../../utils/formatDate';
 import { CommentsProtocol } from '../../interfaces/comments-protocol';
 import { tokenDecoder } from '../../utils/tokenDecoder';
-import AnswerComment from './answer-comment';
-import UpdateAnswer from './update-answer';
+import AnswerComment from './answers/answer-comment';
+import UpdateAnswer from './answers/update-answer';
 
 export type CommentsProps = {
   comments: CommentsProtocol[];
@@ -31,15 +31,24 @@ export default function Comments({ comments, post_id }: CommentsProps) {
   const [activeIndexOfAnswer, setActiveIndexOfAnswer] = useState<number | null>(
     null,
   );
+  const [activeIndexOfAnswering, setActiveIndexOfAnswering] = useState<
+    number | null
+  >(null);
   const [activeIndexUpdating, setActiveIndexUpdating] = useState<number | null>(
     null,
   );
+  const [activeIndexUpdatingAnswering, setActiveIndexUpdatingAnswering] =
+    useState<number | null>(null);
 
   const token = localStorage.getItem('token');
   const user_id = tokenDecoder(token)?.id;
 
   const toggleEllipsis = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
+  };
+
+  const toggleEllipsisAnswering = (index: number) => {
+    setActiveIndexOfAnswering(activeIndexOfAnswering === index ? null : index);
   };
 
   const toggleAnswer = (index: number) => {
@@ -55,6 +64,22 @@ export default function Comments({ comments, post_id }: CommentsProps) {
 
     await axios
       .delete(`comment/delete/${id}`)
+      .then(() => {
+        setIsLoadingDeleting(false);
+        setActiveIndex(null);
+        toast.success('Comentário excluído com sucesso');
+      })
+      .catch(() => {
+        setIsLoadingDeleting(false);
+        toast.error('Erro ao excluir comentário');
+      });
+  };
+
+  const deleteAnswer = async (id: number) => {
+    setIsLoadingDeleting(true);
+
+    await axios
+      .delete(`answer/delete/${id}`)
       .then(() => {
         setIsLoadingDeleting(false);
         setActiveIndex(null);
@@ -178,7 +203,7 @@ export default function Comments({ comments, post_id }: CommentsProps) {
             </div>
             <div className="ml-6 mt-4">
               {comment.Answers.map &&
-                comment.Answers.map((answer) => (
+                comment.Answers.map((answer, answerIndex) => (
                   <>
                     <div className="flex justify-between">
                       <div className="items-center flex gap-8 ">
@@ -209,24 +234,24 @@ export default function Comments({ comments, post_id }: CommentsProps) {
                           <button
                             className="hover:text-blue-400"
                             onClick={() => {
-                              toggleEllipsis(index);
+                              toggleEllipsisAnswering(answerIndex);
                             }}
                           >
                             <EllipsisVertical />
                           </button>
 
-                          {activeIndex === index && (
+                          {activeIndexOfAnswering === answerIndex && (
                             <div className="z-10 mt-8 gap-2 items-center border rounded-lg p-2 justify-center flex flex-col absolute">
                               <button
                                 type="submit"
-                                onClick={() => toggleInputUpdating(index)}
+                                onClick={() => toggleInputUpdating(answerIndex)}
                                 className="hover:text-blue-400 flex items-center gap-3 font-poppins hover:opacity-85 mt-4 w-24 font-medium rounded-md  p-2"
                               >
                                 <RiPencilFill />
                                 Editar
                               </button>
                               <button
-                                onClick={() => deleteComment(comment.id)}
+                                onClick={() => deleteAnswer(answer.id)}
                                 className="hover:text-blue-400 flex justify-center items-center gap-3 font-poppins hover:opacity-85 w-24 font-medium rounded-md  p-2"
                               >
                                 {isLoadingDeleting ? (
@@ -246,10 +271,14 @@ export default function Comments({ comments, post_id }: CommentsProps) {
 
                     <UpdateAnswer
                       answer={answer}
-                      index={index}
-                      post_id={post_id}
-                      activeIndexUpdating={activeIndexUpdating}
-                      setActiveIndexUpdating={setActiveIndexUpdating}
+                      index={answerIndex}
+                      comment_id={comment.id}
+                      activeIndexUpdatingAnswering={
+                        activeIndexUpdatingAnswering
+                      }
+                      setActiveIndexUpdatingAnswering={
+                        setActiveIndexUpdatingAnswering
+                      }
                     />
 
                     <div className="flex flex-row gap-5 mb-12">

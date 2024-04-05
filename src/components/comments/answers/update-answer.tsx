@@ -3,24 +3,26 @@ import { SendHorizonal } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 
-import { tokenDecoder } from '../../utils/tokenDecoder';
-import axios from '../../services/axios';
-import { AnswersProtocol } from '../../interfaces/answers-protocol';
+import { tokenDecoder } from '../../../utils/tokenDecoder';
+import axios from '../../../services/axios';
+import { AnswersProtocol } from '../../../interfaces/answers-protocol';
 
 export type UpdateAnswerProps = {
   answer: AnswersProtocol;
   index: number;
-  post_id: number;
-  activeIndexUpdating: number | null;
-  setActiveIndexUpdating: React.Dispatch<React.SetStateAction<number | null>>;
+  comment_id: number;
+  activeIndexUpdatingAnswering: number | null;
+  setActiveIndexUpdatingAnswering: React.Dispatch<
+    React.SetStateAction<number | null>
+  >;
 };
 
 export default function UpdateAnswer({
   answer,
   index,
-  post_id,
-  activeIndexUpdating,
-  setActiveIndexUpdating,
+  comment_id,
+  activeIndexUpdatingAnswering,
+  setActiveIndexUpdatingAnswering,
 }: UpdateAnswerProps) {
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -37,11 +39,11 @@ export default function UpdateAnswer({
     }
 
     await axios
-      .put(`comment/update/${id}`, { content, user_id, post_id })
+      .put(`answer/update/${id}`, { content, user_id, comment_id })
       .then((response) => {
         console.log(response);
         setIsLoading(false);
-        setActiveIndexUpdating(null);
+        setActiveIndexUpdatingAnswering(null);
         toast.success('Comentário atualizado.');
       })
       .catch((error) => {
@@ -54,7 +56,7 @@ export default function UpdateAnswer({
   return (
     <>
       <div className="flex flex-col justify-center gap-5">
-        {activeIndexUpdating === index ? (
+        {activeIndexUpdatingAnswering === index ? (
           <div className="flex gap-8 items-center">
             <input
               onChange={(e) => setContent(e.target.value)}
