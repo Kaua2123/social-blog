@@ -13,6 +13,9 @@ import toast from 'react-hot-toast';
 import { RiPencilFill } from 'react-icons/ri';
 import { Spinner } from '@chakra-ui/spinner';
 import UpdateAnswer from './update-answer';
+import { toggleEllipsis } from '../../../utils/toggleEllipsis';
+import { toggleInputUpdating } from '../../../utils/toggleUpdating';
+import { toggleAnswer } from '../../../utils/toggleAnswer';
 
 export type AnswersProps = {
   answer: AnswersProtocol;
@@ -37,18 +40,6 @@ export default function Answers({
   const [activeIndexUpdating, setActiveIndexUpdating] = useState<number | null>(
     null,
   );
-
-  const toggleEllipsis = (index: number) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
-
-  const toggleInputUpdating = (index: number) => {
-    setActiveIndexUpdating(activeIndexUpdating === index ? null : index);
-  };
-
-  const toggleAnswer = (index: number) => {
-    setActiveIndexOfAnswer(activeIndexOfAnswer === index ? null : index);
-  };
 
   const deleteAnswer = async (id: number) => {
     setIsLoading(true);
@@ -93,7 +84,7 @@ export default function Answers({
             <button
               className="hover:text-blue-400"
               onClick={() => {
-                toggleEllipsis(index);
+                toggleEllipsis(index, activeIndex, setActiveIndex);
               }}
             >
               <EllipsisVertical />
@@ -103,7 +94,13 @@ export default function Answers({
               <div className="z-10 mt-8 gap-2 items-center border rounded-lg p-2 justify-center flex flex-col absolute">
                 <button
                   type="submit"
-                  onClick={() => toggleInputUpdating(index)}
+                  onClick={() =>
+                    toggleInputUpdating(
+                      index,
+                      activeIndexUpdating,
+                      setActiveIndexUpdating,
+                    )
+                  }
                   className="hover:text-blue-400 flex items-center gap-3 font-poppins hover:opacity-85 mt-4 w-24 font-medium rounded-md  p-2"
                 >
                   <RiPencilFill />
@@ -149,7 +146,7 @@ export default function Answers({
         <p>0</p>
         <button
           onClick={() => {
-            toggleAnswer(index);
+            toggleAnswer(index, activeIndexOfAnswer, setActiveIndexOfAnswer);
             setIsAnswering(!isAnswering);
           }}
           className={

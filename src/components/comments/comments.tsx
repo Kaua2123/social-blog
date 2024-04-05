@@ -18,6 +18,9 @@ import { CommentsProtocol } from '../../interfaces/comments-protocol';
 import { tokenDecoder } from '../../utils/tokenDecoder';
 import AnswerComment from './answers/answer-comment';
 import Answers from './answers/answers';
+import { toggleEllipsis } from '../../utils/toggleEllipsis';
+import { toggleAnswer } from '../../utils/toggleAnswer';
+import { toggleInputUpdating } from '../../utils/toggleUpdating';
 
 export type CommentsProps = {
   comments: CommentsProtocol[];
@@ -31,25 +34,12 @@ export default function Comments({ comments, post_id }: CommentsProps) {
   const [activeIndexOfAnswer, setActiveIndexOfAnswer] = useState<number | null>(
     null,
   );
-
   const [activeIndexUpdating, setActiveIndexUpdating] = useState<number | null>(
     null,
   );
 
   const token = localStorage.getItem('token');
   const user_id = tokenDecoder(token)?.id;
-
-  const toggleEllipsis = (index: number) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
-
-  const toggleAnswer = (index: number) => {
-    setActiveIndexOfAnswer(activeIndexOfAnswer === index ? null : index);
-  };
-
-  const toggleInputUpdating = (index: number) => {
-    setActiveIndexUpdating(activeIndexUpdating === index ? null : index);
-  };
 
   const deleteComment = async (id: number) => {
     setIsLoadingDeleting(true);
@@ -110,7 +100,7 @@ export default function Comments({ comments, post_id }: CommentsProps) {
                   <button
                     className="hover:text-blue-400"
                     onClick={() => {
-                      toggleEllipsis(index);
+                      toggleEllipsis(index, activeIndex, setActiveIndex);
                     }}
                   >
                     <EllipsisVertical />
@@ -119,7 +109,13 @@ export default function Comments({ comments, post_id }: CommentsProps) {
                     <div className="z-10 mt-8 gap-2 items-center border rounded-lg p-2 justify-center flex flex-col absolute">
                       <button
                         type="submit"
-                        onClick={() => toggleInputUpdating(index)}
+                        onClick={() =>
+                          toggleInputUpdating(
+                            index,
+                            activeIndexUpdating,
+                            setActiveIndexUpdating,
+                          )
+                        }
                         className="hover:text-blue-400 flex items-center gap-3 font-poppins hover:opacity-85 mt-4 w-24 font-medium rounded-md  p-2"
                       >
                         <RiPencilFill />
@@ -165,7 +161,11 @@ export default function Comments({ comments, post_id }: CommentsProps) {
               <p>0</p>
               <button
                 onClick={() => {
-                  toggleAnswer(index);
+                  toggleAnswer(
+                    index,
+                    activeIndexOfAnswer,
+                    setActiveIndexOfAnswer,
+                  );
                   setIsAnswering(!isAnswering);
                 }}
                 className={
