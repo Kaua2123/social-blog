@@ -205,9 +205,9 @@ export default function Post() {
                     <div className="shadow-sm shadow-gray-300 flex justify-center items-center rounded-xl  m-24 h-20">
                       <ArrowLeft
                         onClick={() => {
-                          numbersOfPage.length <= currentPage
-                            ? setCurrentPage(currentPage - 1)
-                            : currentPage;
+                          if (currentPage > 1) {
+                            setCurrentPage(currentPage - 1);
+                          }
                         }}
                         className="text-blue-400 cursor-pointer size-8 hover:text-black"
                       />
@@ -222,9 +222,9 @@ export default function Post() {
                       ))}
                       <ArrowRight
                         onClick={() => {
-                          numbersOfPage.length > currentPage
-                            ? setCurrentPage(currentPage + 1)
-                            : currentPage;
+                          if (currentPage <= numbersOfPage.length - 1) {
+                            setCurrentPage(currentPage + 1);
+                          }
                         }}
                         className="text-blue-400 cursor-pointer size-8 hover:text-black"
                       />

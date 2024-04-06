@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FileText, Tags, Text } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Dot, FileText, Tags, Text } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 import { tokenDecoder } from '../utils/tokenDecoder';
@@ -16,7 +16,7 @@ export default function MyPosts() {
   const [tags, setTags] = useState('');
   const [image] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  //   const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const token = localStorage.getItem('token');
   const decodedToken = tokenDecoder(token);
 
@@ -63,6 +63,16 @@ export default function MyPosts() {
         toast.error('Erro ao criar post.');
       });
   };
+
+  const postsPerPage = 3;
+  const numbersOfPage = [];
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  for (let i = 1; i <= Math.ceil(posts.length / postsPerPage); i++) {
+    numbersOfPage.push(i);
+  }
 
   return (
     <>
@@ -150,15 +160,49 @@ export default function MyPosts() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 m-20 gap-y-10">
-            {posts && posts.length > 0 ? (
-              posts.map((post, index) => <PostCard key={index} post={post} />)
-            ) : (
-              <>
-                <h1 className="text-blue-400 font-poppins text-3xl mb-20 flex items-center justify-center">
-                  Parece que você não realizou nenhuma postagem.
-                </h1>
-              </>
+          <div className="m-20 flex flex-col">
+            <div className="flex gap-20">
+              {posts && posts.length > 0 ? (
+                currentPosts.map((post, index) => (
+                  <PostCard key={index} post={post} />
+                ))
+              ) : (
+                <>
+                  <h1 className="text-blue-400 font-poppins text-3xl mb-20 flex items-center justify-center">
+                    Parece que você não realizou nenhuma postagem.
+                  </h1>
+                </>
+              )}
+            </div>
+
+            {posts.length > 0 && (
+              <div className="shadow-sm shadow-gray-300 flex justify-center items-center rounded-xl  m-24 h-20">
+                <ArrowLeft
+                  onClick={() => {
+                    if (currentPage > 1) {
+                      setCurrentPage(currentPage - 1);
+                    }
+                  }}
+                  className="text-blue-400 cursor-pointer size-8 hover:text-black"
+                />
+                {numbersOfPage.map((pageNumber) => (
+                  <Dot
+                    onClick={() => {
+                      setCurrentPage(pageNumber);
+                    }}
+                    key={pageNumber}
+                    className="text-blue-400 cursor-pointer size-8 hover:text-black"
+                  />
+                ))}
+                <ArrowRight
+                  onClick={() => {
+                    if (currentPage <= numbersOfPage.length - 1) {
+                      setCurrentPage(currentPage + 1);
+                    }
+                  }}
+                  className="text-blue-400 cursor-pointer size-8 hover:text-black"
+                />
+              </div>
             )}
           </div>
         </>
