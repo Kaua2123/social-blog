@@ -1,5 +1,4 @@
 import { User } from 'lucide-react';
-import { Bell } from 'lucide-react';
 import logo from '../imgs/logo.png';
 
 import { Link } from 'react-router-dom';
@@ -54,8 +53,6 @@ export default function Navbar() {
       </div>
       {token ? (
         <div className="mr-10 flex items-center gap-5">
-          <Bell size={22} cursor={'pointer'} />
-
           <Link to={'/profile'} className="border-black border rounded-full">
             {image ? (
               <img src={userPhoto} alt="" className="w-12 h-12 rounded-full" />
