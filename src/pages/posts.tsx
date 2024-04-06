@@ -114,7 +114,9 @@ export default function Posts() {
         <div className="shadow-sm shadow-gray-300 flex justify-center items-center rounded-xl  m-24 h-20">
           <ArrowLeft
             onClick={() => {
-              setCurrentPage(currentPage - 1);
+              numbersOfPage.length <= currentPage
+                ? setCurrentPage(currentPage - 1)
+                : currentPage;
             }}
             className="text-blue-400 cursor-pointer size-8 hover:text-black"
           />
@@ -129,7 +131,9 @@ export default function Posts() {
           ))}
           <ArrowRight
             onClick={() => {
-              setCurrentPage(currentPage + 1);
+              numbersOfPage.length > currentPage
+                ? setCurrentPage(currentPage + 1)
+                : currentPage;
             }}
             className="text-blue-400 cursor-pointer size-8 hover:text-black"
           />
