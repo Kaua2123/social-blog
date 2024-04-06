@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Calendar, Heart, MessageCircle, ShareIcon, User } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  Calendar,
+  Dot,
+  Heart,
+  MessageCircle,
+  ShareIcon,
+  User,
+} from 'lucide-react';
 
 import axios from '../services/axios';
 import noImg from '../imgs/no-img.png';
@@ -22,6 +31,7 @@ export default function Post() {
   const [post, setPost] = useState<PostProtocol>();
   const [posts, setPosts] = useState<PostProtocol[]>([]);
   const [isLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const postDate = formatDate(post?.created_at);
   const relatedPosts: PostProtocol[] = [];
   const token = localStorage.getItem('token');
@@ -79,6 +89,16 @@ export default function Post() {
       ? relatedPosts.push(postArray)
       : relatedPosts,
   );
+
+  const postsPerPage = 3;
+  const numbersOfPage = [];
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = relatedPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  for (let i = 1; i <= Math.ceil(relatedPosts.length / postsPerPage); i++) {
+    numbersOfPage.push(i);
+  }
 
   return (
     <>
@@ -165,18 +185,53 @@ export default function Post() {
               Pode te interessar:
             </h1>
             <div className="flex flex-row items-center justify-center gap-8">
-              {relatedPosts.length > 0 ? (
-                relatedPosts.map((post) => (
-                  <>
-                    <PostCard key={post.id} post={post} />
-                  </>
-                ))
-              ) : (
-                <h1 className="text-blue-400 mt-8 font-poppins text-3xl mb-20 flex items-center justify-center">
-                  Parece que não há posts relacionados com esse. Continue
-                  postando!
-                </h1>
-              )}
+              <div className="flex flex-col">
+                <div className="flex gap-20">
+                  {relatedPosts.length > 0 ? (
+                    currentPosts.map((post) => (
+                      <>
+                        <PostCard key={post.id} post={post} />
+                      </>
+                    ))
+                  ) : (
+                    <h1 className="text-blue-400 mt-8 font-poppins text-3xl mb-20 flex items-center justify-center">
+                      Parece que não há posts relacionados com esse. Continue
+                      postando!
+                    </h1>
+                  )}
+                </div>
+                <div>
+                  {relatedPosts.length > 0 && (
+                    <div className="shadow-sm shadow-gray-300 flex justify-center items-center rounded-xl  m-24 h-20">
+                      <ArrowLeft
+                        onClick={() => {
+                          numbersOfPage.length <= currentPage
+                            ? setCurrentPage(currentPage - 1)
+                            : currentPage;
+                        }}
+                        className="text-blue-400 cursor-pointer size-8 hover:text-black"
+                      />
+                      {numbersOfPage.map((pageNumber) => (
+                        <Dot
+                          onClick={() => {
+                            setCurrentPage(pageNumber);
+                          }}
+                          key={pageNumber}
+                          className="text-blue-400 cursor-pointer size-8 hover:text-black"
+                        />
+                      ))}
+                      <ArrowRight
+                        onClick={() => {
+                          numbersOfPage.length > currentPage
+                            ? setCurrentPage(currentPage + 1)
+                            : currentPage;
+                        }}
+                        className="text-blue-400 cursor-pointer size-8 hover:text-black"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
           <Comments comments={post.Comments} post_id={post.id} />
