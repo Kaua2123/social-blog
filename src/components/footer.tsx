@@ -1,10 +1,7 @@
 export default function Footer() {
   return (
-    <div
-      style={{ height: '40vh' }}
-      className="w-full flex flex-row bg-slate-100"
-    >
-      <div className="p-20 flex flex-col gap-2">
+    <div className="flex lg:flex-row lg:items-start sm:flex-col sm:items-center  bg-slate-100">
+      <div className="lg:p-20 sm:p-10 flex flex-col gap-2">
         <p className="text-blue-400 font-poppins">INFORMAÇÃO</p>
         <a href="#" className="text-gray-500">
           Sobre
@@ -17,7 +14,7 @@ export default function Footer() {
         </a>
       </div>
 
-      <div className="p-20 flex flex-col gap-2">
+      <div className="lg:p-20 sm:p-10  flex flex-col gap-2">
         <p className="text-blue-400 font-poppins">RECURSOS</p>
         <a href="#" className="text-gray-500">
           Criar um Post
@@ -27,7 +24,7 @@ export default function Footer() {
         </a>
       </div>
 
-      <div className="p-20 flex flex-col gap-2">
+      <div className="lg:p-20 sm:p-10  flex flex-col gap-2">
         <p className="text-blue-400 font-poppins">ACESSO RÁPIDO</p>
         <a href="#" className="text-gray-500">
           Home
@@ -40,7 +37,7 @@ export default function Footer() {
         </a>
       </div>
 
-      <div className="p-20 flex flex-col gap-8">
+      <div className="lg:p-20 sm:p-10 flex flex-col gap-8">
         <p className="text-blue-400 font-poppins">Contate-nos</p>
         <div className="flex flex-row gap-4 shadow-sm items-center">
           <input type="text" className="pl-4 p-2" placeholder="Seu email" />
