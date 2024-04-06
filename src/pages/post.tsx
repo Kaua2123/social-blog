@@ -74,8 +74,10 @@ export default function Post() {
       });
   };
 
-  posts.map((post) =>
-    relatedPosts.length < 3 ? relatedPosts.push(post) : relatedPosts,
+  posts.map((postArray) =>
+    postArray.tags == post?.tags && postArray.id != post.id
+      ? relatedPosts.push(postArray)
+      : relatedPosts,
   );
 
   return (
@@ -163,11 +165,18 @@ export default function Post() {
               Pode te interessar:
             </h1>
             <div className="flex flex-row items-center justify-center gap-8">
-              {relatedPosts.map((post) => (
-                <>
-                  <PostCard key={post.id} post={post} />
-                </>
-              ))}
+              {relatedPosts.length > 0 ? (
+                relatedPosts.map((post) => (
+                  <>
+                    <PostCard key={post.id} post={post} />
+                  </>
+                ))
+              ) : (
+                <h1 className="text-blue-400 mt-8 font-poppins text-3xl mb-20 flex items-center justify-center">
+                  Parece que não há posts relacionados com esse. Continue
+                  postando!
+                </h1>
+              )}
             </div>
           </div>
           <Comments comments={post.Comments} post_id={post.id} />
