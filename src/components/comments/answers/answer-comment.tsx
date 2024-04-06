@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SendHorizonal, User } from 'lucide-react';
 import { Spinner } from '@chakra-ui/spinner';
 import toast from 'react-hot-toast';
@@ -13,8 +13,26 @@ export type AnswerProps = {
 export default function AnswerComment({ comment_id }: AnswerProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState('');
+  const [userPhoto, setUserPhoto] = useState('');
+  const [image, setImage] = useState('');
   const token = localStorage.getItem('token');
   const user_id = tokenDecoder(token)?.id;
+
+  useEffect(() => {
+    const getUsersPhoto = async () => {
+      await axios
+        .get(`/user/${user_id}`)
+        .then((response) => {
+          setImage(response.data.image);
+          setUserPhoto(response.data.image_url);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    getUsersPhoto();
+  });
 
   const answerComment = async () => {
     setIsLoading(true);
@@ -40,7 +58,11 @@ export default function AnswerComment({ comment_id }: AnswerProps) {
 
   return (
     <div className="flex gap-8 items-center">
-      <User size={60} />
+      {image ? (
+        <img src={userPhoto} alt="" className="w-12 h-12 rounded-full" />
+      ) : (
+        <User size={60} />
+      )}
       <input
         onChange={(e) => setContent(e.target.value)}
         placeholder="Digite algo..."
