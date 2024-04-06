@@ -70,7 +70,7 @@ export default function Comments({ comments, post_id }: CommentsProps) {
         comments.map((comment, index) => (
           <div
             key={comment.id}
-            className="m-28 rounded-md p-6 flex flex-col flex-wrap gap-8"
+            className="ml-28 rounded-md p-6 flex flex-col flex-wrap gap-8"
           >
             <div className="flex justify-between">
               <div className="items-center flex gap-8 ">
@@ -148,7 +148,7 @@ export default function Comments({ comments, post_id }: CommentsProps) {
               setActiveIndexUpdating={setActiveIndexUpdating}
             />
 
-            <div className="flex flex-row gap-5">
+            <div className="flex flex-row  gap-5">
               <Heart
                 cursor="pointer"
                 className="hover:text-red-400 visited:text-red-400"
