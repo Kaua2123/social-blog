@@ -49,11 +49,11 @@ export default function Posts() {
       <Navbar />
 
       <div
-        style={{ minHeight: '55vh' }}
-        className="lg:flex w-full items-center justify-center rounded-b-lg bg-gradient-to-br from-blue-500 via-blue-400 to-blue-400"
+        style={{ minHeight: '45vh' }}
+        className="lg:p-0 p-12 lg:flex w-full items-center justify-center rounded-b-lg bg-gradient-to-br from-blue-500 via-blue-400 to-blue-400"
       >
         <div className="lg:w-1/2 flex flex-col  items-center justify-center">
-          <h1 className="font-poppins lg:mt-0 mt-12 lg:text-6xl text-4xl text-white mb-8">
+          <h1 className="font-poppins lg:mt-0 mt-4 lg:text-6xl text-4xl text-white mb-8">
             Postagens
           </h1>
           <h1 className="lg:text-xl font-poppins text-center mb-4 text-white">

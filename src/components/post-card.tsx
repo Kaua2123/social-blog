@@ -32,10 +32,7 @@ export default function PostCard({ post }: PostCardProps) {
 
   return (
     <>
-      <div
-        style={{ height: '440px', width: '350px', minWidth: '350px' }}
-        className="relative flex flex-col shadow-lg rounded-2xl"
-      >
+      <div className="lg:h-440px lg:w-350px w-72 relative flex flex-col shadow-lg rounded-2xl">
         {isMyPost && (
           <>
             <button

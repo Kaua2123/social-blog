@@ -8,6 +8,12 @@ export default {
         heebo: ['Heebo'],
         poppins: ['Poppins'],
       },
+      height: {
+        '440px': '440px',
+      },
+      width: {
+        '350px': '350px',
+      },
     },
   },
   plugins: [],
