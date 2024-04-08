@@ -49,22 +49,26 @@ export default function Posts() {
       <Navbar />
 
       <div
-        style={{ height: '38vh' }}
-        className="flex w-full items-center justify-center rounded-b-lg bg-gradient-to-br from-blue-500 via-blue-400 to-blue-400"
+        style={{ minHeight: '55vh' }}
+        className="lg:flex w-full items-center justify-center rounded-b-lg bg-gradient-to-br from-blue-500 via-blue-400 to-blue-400"
       >
-        <div className="w-1/2 flex flex-col items-center justify-center">
-          <h1 className="font-poppins text-6xl text-white mb-8">Postagens</h1>
-          <h1 className=" text-xl text-white">
+        <div className="lg:w-1/2 flex flex-col  items-center justify-center">
+          <h1 className="font-poppins lg:mt-0 mt-12 lg:text-6xl text-4xl text-white mb-8">
+            Postagens
+          </h1>
+          <h1 className="lg:text-xl font-poppins text-center mb-4 text-white">
             Aqui, você pode visualizar as postagens da comunidade.
           </h1>
         </div>
 
-        <div className="w-1/2 gap-6 flex flex-col items-center justify-center">
-          <h1 className=" text-xl text-white">Em busca de alguma postagem?</h1>
-          <div className="flex flex-row gap-6  items-center justify-center">
+        <div className="lg:w-1/2 gap-6 flex flex-col items-center justify-center">
+          <h1 className="lg:text-xl font-poppins text-sm text-white">
+            Em busca de alguma postagem?
+          </h1>
+          <div className="flex flex-col lg:flex-row lg:gap-6 gap-2  items-center justify-center">
             <input
               onChange={(e) => setQuery(e.target.value)}
-              className="pr-3 pl-6 rounded-md placeholder-gray-500 text-black border border-gray-400 focus:border-blue-400 transition-all outline-none p-2 "
+              className="pr-3 lg:w-fit w-56  pl-6 rounded-md placeholder-gray-500 text-black border border-gray-400 focus:border-blue-400 transition-all outline-none p-2 "
               type="text"
               placeholder="Nome do post"
             />
@@ -76,7 +80,7 @@ export default function Posts() {
                 );
                 query.length > 0 ? setIsFiltering(true) : setIsFiltering(false);
               }}
-              className="font-poppins flex items-center justify-center  gap-4  w-32 p-2 font-medium transition-all bg-white rounded-md"
+              className="font-poppins flex items-center justify-center  gap-4   lg:w-32 w-56 p-2 font-medium transition-all bg-white rounded-md"
             >
               {isLoading ? (
                 <Spinner boxSize="22px" color="black" />
@@ -91,7 +95,7 @@ export default function Posts() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 m-20 gap-y-10">
+      <div className="flex flex-col mt-8 items-center justify-center lg:grid grid-cols-3 lg:m-20 gap-y-10">
         {posts && posts.length > 0 ? (
           isFiltering ? (
             filteredCurrentPosts.map((post, index) => (
