@@ -36,7 +36,7 @@ function Home() {
                       <b className="text-blue-400">Compartilhe</b> aqui
                       <br /> o que pensa
                     </h1>
-                    <p className="font-poppins font-normal md:text-lg text-base pb-8">
+                    <p className="font-poppins font-normal md:text-lg lg:text-start text-center  text-base pb-8">
                       Compartilhe suas ideias, opiniões e experiências com a{' '}
                       <br /> nossa comunidade. Sua voz é importante para nós
                     </p>
@@ -68,7 +68,7 @@ function Home() {
                     </HashLink>
                   </div>
                 </div>
-                <div className="lg:block mb-28">
+                <div className="lg:block flex items-center justify-center mb-28">
                   <img className="" src={social} alt="" />
                 </div>
               </div>
