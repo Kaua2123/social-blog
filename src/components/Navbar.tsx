@@ -36,7 +36,7 @@ export default function Navbar() {
           <img className="size-16 cursor-pointer" src={logo} alt="" />
         </Link>
       </div>
-      <div className="flex row justify-center gap-8 ml-8">
+      <div className="flex row justify-center gap-8">
         <button className="font-medium hover:text-blue-400">
           <Link to={'/posts'}> Postagens </Link>
         </button>
@@ -62,7 +62,7 @@ export default function Navbar() {
           </Link>
         </div>
       ) : (
-        <div className="flex row gap-8 mr-4">
+        <div className="">
           <button className="font-medium hover:text-blue-400 mr-8">
             <Link to={'/login'}> Entrar </Link>
           </button>

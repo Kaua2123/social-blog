@@ -24,7 +24,7 @@ export default function Footer() {
         </a>
       </div>
 
-      <div className="lg:p-20 p-10 lg:ml-0 ml-4 flex flex-col gap-2">
+      <div className="lg:p-20 p-10 lg:ml-0 ml-3 flex flex-col gap-2">
         <p className="text-blue-400 font-poppins">ACESSO RÁPIDO</p>
         <a href="#" className="text-gray-500">
           Home

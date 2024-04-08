@@ -81,13 +81,13 @@ function Home() {
                 id="sobre"
                 className="flex flex-col text-center justify-center items-center"
               >
-                <div className="w-1/2">
-                  <h2 className="font-poppins lg:text-5xl text-2xl mt-16 mb-8">
+                <div className="lg:w-1/2">
+                  <h2 className="m-10 font-poppins lg:text-5xl text-2xl mt-16 mb-8">
                     Seja bem-vindo ao nosso{' '}
                     <b className="text-blue-400">blog social</b>, onde cada voz
                     é única e importante.
                   </h2>
-                  <p className="lg:text-lg font-poppins">
+                  <p className="m-10 text-sm lg:text-lg font-poppins">
                     Descubra um espaço para compartilhar suas ideias, aprender
                     com os outros e fazer parte de uma comunidade que valoriza a
                     diversidade de pensamentos
