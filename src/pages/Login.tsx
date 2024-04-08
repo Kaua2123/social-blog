@@ -97,7 +97,7 @@ export default function Login() {
 
               <div className="lg:w-1/2 w-full lg:m-0 m-10 lg:p-28">
                 <div className="mb-8">
-                  <h1 className="font-poppins text-4xl whitespace-nowrap font-bold text-blue-400">
+                  <h1 className="font-poppins text-4xl font-bold text-blue-400">
                     {!isLogin && <p>Vamos começar.</p>}
                     {isLogin && <p>Entre agora! </p>}
                   </h1>
