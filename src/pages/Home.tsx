@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Navbar from '../components/navbar';
+import Navbar from '../components/navbar.tsx';
 
 import social from '../imgs/svg/img-social-home-blue.svg';
 

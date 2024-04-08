@@ -4,7 +4,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 import { PostProtocol } from '../interfaces/post-protocol';
 import { filterPosts } from '../utils/filterPosts';
-import Navbar from '../components/navbar';
+import Navbar from '../components/navbar.tsx';
 import Footer from '../components/footer';
 import PostCard from '../components/post-card';
 import axios from '../services/axios';

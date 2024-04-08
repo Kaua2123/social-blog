@@ -1,7 +1,7 @@
 import { User, Camera, Mail, LockKeyhole, LogOut } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { tokenDecoder } from '../utils/tokenDecoder';
-import Navbar from '../components/navbar';
+import Navbar from '../components/navbar.tsx';
 import toast from 'react-hot-toast';
 import axios from '../services/axios';
 import { useNavigate } from 'react-router-dom';

@@ -17,7 +17,7 @@ import { formatDate } from '../utils/formatDate';
 
 import { PostProtocol } from '../interfaces/post-protocol';
 
-import Navbar from '../components/navbar';
+import Navbar from '../components/navbar.tsx';
 import PostCard from '../components/post-card';
 import Footer from '../components/footer';
 import Comments from '../components/comments/comments';

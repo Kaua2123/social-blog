@@ -7,7 +7,7 @@ import axios from '../services/axios';
 import { PostProtocol } from '../interfaces/post-protocol';
 import PostCard from '../components/post-card';
 import Loader from '../components/loader';
-import Navbar from '../components/navbar';
+import Navbar from '../components/navbar.tsx';
 
 export default function MyPosts() {
   const [posts, setPosts] = useState<PostProtocol[]>([]);
