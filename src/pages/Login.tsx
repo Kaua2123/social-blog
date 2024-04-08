@@ -75,27 +75,31 @@ export default function Login() {
         <Loader isLoading={isLoading} />
       ) : (
         <>
-          <div className="absolute top-0 p-8">
+          <div className="relative top-0 p-1">
             <button
               onClick={() => {
                 navigate('/');
               }}
-              className="hover:opacity-85  flex gap-4 font-poppins font-medium text-white w-full shadow-blue-400 transition-all bg-blue-400 rounded-md p-3"
+              className="hover:opacity-85 flex gap-4 font-poppins font-medium text-white w-18 shadow-blue-400 transition-all bg-blue-400 rounded-md p-3"
             >
               <ArrowLeft className="text-white" />
-              <p className="text-white">Voltar</p>
             </button>
           </div>
           <section className="h-full w-full">
-            <div className="flex flex-row">
-              <div className="w-1/2 p-20">
-                <img src={login} className="size-full" alt="" />
+            <div className="flex  lg:flex-row">
+              <div className="lg:w-1/2 lg:p-20">
+                <img
+                  src={login}
+                  className="hidden lg:block lg:size-full"
+                  alt=""
+                />
               </div>
 
-              <div className="w-1/2 p-36">
+              <div className="lg:w-1/2 w-full lg:m-0 m-10 lg:p-28">
                 <div className="mb-8">
-                  <h1 className="font-poppins text-4xl font-bold text-blue-400">
-                    <p>Vamos começar.</p>
+                  <h1 className="font-poppins text-4xl whitespace-nowrap font-bold text-blue-400">
+                    {!isLogin && <p>Vamos começar.</p>}
+                    {isLogin && <p>Entre agora! </p>}
                   </h1>
                   <div className="flex flex-row gap-2">
                     {!isLogin && <p>Já tem uma conta? </p>}
