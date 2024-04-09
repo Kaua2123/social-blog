@@ -42,7 +42,7 @@ export default function MyPosts() {
     };
 
     getUserPosts();
-  });
+  }, [decodedToken?.id, token]);
 
   const createPost = async () => {
     if (!token)

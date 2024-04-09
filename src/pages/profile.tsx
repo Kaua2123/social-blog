@@ -37,7 +37,7 @@ export default function Profile() {
     };
 
     getUser();
-  });
+  }, [decodedToken?.id]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     axios.defaults.headers.Authorization = `Bearer ${token}`;

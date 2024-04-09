@@ -27,7 +27,7 @@ export default function Navbar() {
     };
 
     getUsersPhoto();
-  });
+  }, [decodedToken?.id]);
 
   return (
     <div className="sticky flex row justify-between items-center  p-1 shadow-sm">
