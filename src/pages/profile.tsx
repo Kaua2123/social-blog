@@ -137,16 +137,18 @@ export default function Profile() {
             </div>
           </div>
 
-          <div className=" max-w-7xl mx-auto mt-10 flex items-center gap-40">
+          <div className=" max-w-7xl mx-auto mt-10 lg:flex items-center gap-40">
             <div className="flex flex-col">
               <h1 className="text-blue-400  text-2xl mb-3 font-poppins text-medium">
                 Dados pessoais
               </h1>
-              <h1 className="text-gray-700">Altere seus dados aqui</h1>
+              <h1 className="text-gray-700 lg:mb-0 mb-10">
+                Altere seus dados aqui
+              </h1>
             </div>
 
             <div>
-              <form action="">
+              <form action="" className="m-2">
                 <div className="flex flex-row items-center gap-10 ">
                   <div>
                     <label htmlFor="" className="block">
@@ -225,7 +227,7 @@ export default function Profile() {
               </button>
             </div>
           </div>
-          <div className="absolute flex gap-2 rounded-lg bg-blue-400 right-10">
+          <div className="absolute flex gap-2 rounded-lg bg-blue-400 right-0 mt-14 lg:right-10">
             <button
               onClick={() => {
                 localStorage.removeItem('token');
