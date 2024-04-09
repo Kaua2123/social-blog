@@ -45,14 +45,16 @@ export default function Navbar() {
             <Link to={'/myPosts'}> Meus posts </Link>
           </button>
         )}
-        <button className="font-medium hover:text-blue-400">
-          <HashLink smooth to={'/#sobre'}>
-            Sobre
-          </HashLink>
-        </button>
+        {!token && (
+          <button className="font-medium hover:text-blue-400">
+            <HashLink smooth to={'/#sobre'}>
+              Sobre
+            </HashLink>
+          </button>
+        )}
       </div>
       {token ? (
-        <div className="mr-10 flex items-center gap-5">
+        <div className=" flex items-center gap-5">
           <Link to={'/profile'} className="border-black border rounded-full">
             {image ? (
               <img src={userPhoto} alt="" className="w-12 h-12 rounded-full" />

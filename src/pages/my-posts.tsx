@@ -82,20 +82,29 @@ export default function MyPosts() {
         <>
           <Navbar />
           <div
-            style={{ height: '34vh' }}
-            className="flex flex-col w-full items-center justify-center rounded-b-lg bg-gradient-to-br from-blue-500 via-blue-400 to-blue-400"
+            style={{ minHeight: '40vh' }}
+            className="p-20  flex flex-col w-full items-center justify-center rounded-b-lg bg-gradient-to-br from-blue-500 via-blue-400 to-blue-400"
           >
-            <h1 className="font-poppins text-6xl text-white mb-8">
+            <h1 className="font-poppins text-nowrap lg:text-6xl text-4xl text-white mb-8">
               Meus posts
             </h1>
-            <h1 className="text-xl text-white">
+            <h1 className="lg:text-xl text-center font-poppins text-white">
               Crie, edite, delete e visualize seus próprios posts. Faça parte
               dessa comunidade!
             </h1>
           </div>
 
-          <div className="flex flex-row p-32">
-            <div className="w-1/2">
+          <div className="flex flex-col lg:flex-row p-20 gap-10 lg:gap-28">
+            <div className="lg:w-1/2 flex flex-col justify-center items-center">
+              <h1 className="font-poppins lg:text-6xl text-4xl mb-8 text-center">
+                Criar post
+              </h1>
+              <h1 className="font-poppins text-center text-xl ">
+                Preencha todos os campos
+              </h1>
+            </div>
+
+            <div className="lg:w-1/2">
               <form action="">
                 <>
                   <label htmlFor="" className="block">
@@ -151,17 +160,10 @@ export default function MyPosts() {
                 </button>
               </form>
             </div>
-
-            <div className="w-1/2 flex flex-col justify-center items-center">
-              <h1 className="font-poppins text-6xl mb-8">Criar post</h1>
-              <h1 className="font-poppins text-xl ">
-                Preencha todos os campos
-              </h1>
-            </div>
           </div>
 
-          <div className="m-20 flex flex-col">
-            <div className="flex gap-20">
+          <div className="">
+            <div className="flex flex-col mt-8 justify-center lg:grid grid-cols-3 lg:m-20 gap-y-10 items-center gap-20">
               {posts && posts.length > 0 ? (
                 currentPosts.map((post, index) => (
                   <PostCard key={index} post={post} />
