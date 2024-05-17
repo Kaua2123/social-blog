@@ -4,7 +4,7 @@
 This project is a simulation of a Blog / Social Media. Social Blog has the following functionalities: CRUD (CREATE, READ, UPDATE, and DELETE) of users, posts, and comments.
 
 ## 💻 Guide
-To start the project, it is necessary to start the REST API first, which can be found at this link. Additionally, a local connection to MySQL Workbench is required to start the MySQL database.
+To start the project, it is necessary to start the REST API first, which can be found at this [link](https://github.com/Kaua2123/system-blog-api). Additionally, a local connection to MySQL Workbench is required to start the MySQL database.
 
 ### Steps to start the project
 
